@@ -1,6 +1,6 @@
 import os
 import json
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 from .functions import execute_query
@@ -73,6 +73,7 @@ schema_info = {
 @app.get("/")
 async def root():
     return {"message": "Establishing Root Endpoint"}
+
 @app.post("/ask/")
 async def ask_openai(request: AskRequest):
     try:
@@ -81,8 +82,20 @@ async def ask_openai(request: AskRequest):
         if not user_message:
             raise HTTPException(status_code=400, detail="Message is required")
 
+        # Enhanced prompt with schema details
+        schema_prompt = f"""
+        You are a Azure SQL database expert. Only use the tables and columns listed below:
+        Tables:
+        - SalesLT.Customer:(Customers of the store.)
+          - CustomerID, NameStyle, Title, FirstName, MiddleName, LastName, Suffix, CompanyName, SalesPerson, EmailAddress, Phone, PasswordHash, PasswordSalt, rowguid, ModifiedDate
+        - SalesLT.Product (Products sold or used in the manfacturing of sold products.):
+          - ProductID, Name, ProductNumber, Color, StandardCost, ListPrice, Size, Weight, ProductCategoryID, ProductModelID, SellStartDate, SellEndDate, DiscontinuedDate, ThumbNailPhoto, ThumbnailPhotoFileName, rowguid, ModifiedDate
+        - SalesLT.SalesOrderDetail (Individual products associated with a specific sales order.):
+            - SalesOrderID, SalesOrderDetailID, OrderQty, ProductID, UnitPrice, UnitPriceDiscount, LineTotal, rowguid, ModifiedDate
+        """
+
         messages = [
-            {"role": "system", "content": f"Schema information: {json.dumps(schema_info)}"},
+            {"role": "system", "content": schema_prompt},
             {"role": "user", "content": user_message}
         ]
 
@@ -107,7 +120,7 @@ async def ask_openai(request: AskRequest):
         ]
 
         response = client.chat.completions.create(
-            model="gpt-4", 
+            model="gpt-4",
             messages=messages,
             tools=tools,
             tool_choice="auto",
@@ -120,7 +133,7 @@ async def ask_openai(request: AskRequest):
 
         if tool_calls:
             available_functions = {
-                "execute_query": execute_query,
+                "execute_query": execute_query,  # No need to pass schema_info anymore
             }
 
             for tool_call in tool_calls:
