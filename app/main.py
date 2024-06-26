@@ -8,8 +8,10 @@ from .routes import router
 import logging
 from pydantic import BaseModel
 
+
 class AskRequest(BaseModel):
     message: str
+
 
 # Setup logging to troubleshoot if need be
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +28,7 @@ app.include_router(router)
 client = AzureOpenAI(
     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    api_version="2024-03-01-preview"
+    api_version="2024-03-01-preview",
 )
 
 # Schema information for the tables
@@ -46,7 +48,7 @@ schema_info = {
         "PasswordHash": "String(128)",
         "PasswordSalt": "String(10)",
         "rowguid": "UUID",
-        "ModifiedDate": "DateTime"
+        "ModifiedDate": "DateTime",
     },
     "SalesLT.Product": {
         "ProductID": "Integer",
@@ -65,14 +67,15 @@ schema_info = {
         "ThumbNailPhoto": "BLOB",
         "ThumbnailPhotoFileName": "String(50)",
         "rowguid": "UUID",
-        "ModifiedDate": "DateTime"
-    }
+        "ModifiedDate": "DateTime",
+    },
 }
 
 # Root endpoint for testing
 @app.get("/")
 async def root():
     return {"message": "Establishing Root Endpoint"}
+
 
 @app.post("/ask/")
 async def ask_openai(request: AskRequest):
@@ -96,7 +99,7 @@ async def ask_openai(request: AskRequest):
 
         messages = [
             {"role": "system", "content": schema_prompt},
-            {"role": "user", "content": user_message}
+            {"role": "user", "content": user_message},
         ]
 
         tools = [
@@ -141,9 +144,7 @@ async def ask_openai(request: AskRequest):
                 function_to_call = available_functions[function_name]
                 function_args = json.loads(tool_call.function.arguments)
                 logger.info(f"Function arguments: {function_args}")
-                function_response = function_to_call(
-                    query=function_args.get("query")
-                )
+                function_response = function_to_call(query=function_args.get("query"))
                 logger.info(f"Function Response: {function_response}")
                 return json.loads(function_response)
         else:

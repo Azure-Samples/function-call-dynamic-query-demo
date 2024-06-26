@@ -6,8 +6,9 @@ import uuid
 
 Base = declarative_base()
 
+
 class Customer(Base):
-    __tablename__ = 'Customer'
+    __tablename__ = "Customer"
 
     CustomerID = Column(Integer, primary_key=True, index=True)
     NameStyle = Column(Boolean, default=False)
@@ -25,8 +26,9 @@ class Customer(Base):
     rowguid = Column(UUID(as_uuid=True), default=uuid.uuid4, nullable=False)
     ModifiedDate = Column(DateTime, default=datetime.datetime.now, nullable=False)
 
+
 class Product(Base):
-    __tablename__ = 'Product'
+    __tablename__ = "Product"
 
     ProductID = Column(Integer, primary_key=True, index=True)
     Name = Column(String(50), nullable=False)
