@@ -6,6 +6,9 @@ import struct
 from decimal import Decimal
 import logging
 from dotenv import load_dotenv
+import sqlparse
+from sqlparse.sql import IdentifierList, Identifier
+from sqlparse.tokens import Keyword, DML
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -16,6 +19,17 @@ load_dotenv()
 
 # Define the connection string
 connection_string = os.getenv('AZURE_SQL_CONNECTIONSTRING')
+
+
+# Function to check if the SQL query is read-only
+def is_read_only_query(query):
+    parsed = sqlparse.parse(query)
+    for statement in parsed:
+        for token in statement.tokens:
+            if token.ttype is DML and token.value.upper() not in ['SELECT']:
+                return False
+    return True
+
 
 # Function to get a database connection
 def get_conn():
@@ -40,6 +54,10 @@ def convert_decimal(obj):
 
 # Function to execute a SQL query
 def execute_query(query):
+    if not is_read_only_query(query):
+        logger.error(f"Disallowed write operation attempted: {query}")
+        return json.dumps({"error": "Write operations are not allowed."})
+
     try:
         logger.info(f"Executing query: {query}")  # Log the generated query
         with get_conn() as conn:
