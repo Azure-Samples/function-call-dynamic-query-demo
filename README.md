@@ -18,37 +18,40 @@ Before you begin, ensure you have the following:
   - `python-dotenv`
   - `pydantic`
 
-## Project Structure
-.
-├── app
-│ ├── init.py
-│ ├── main.py
-│ ├── functions.py
-│ └── routes.py
-├── .env
-├── example_run.py
-├── testing_database_existency.py
-├── README.md
-└── requirements.txt
-
-
 ## Setup
 
-1. Clone this repository to your local machine.
+1. **Clone this repository to your local machine:**
 
-2. Create a virtual environment and activate it:
+    ```bash
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+2. **Create a virtual environment and activate it:**
 
-pip install -r requirements.txt
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    ```
 
-AZURE_OPENAI_ENDPOINT=https://your_openai_endpoint
-AZURE_OPENAI_API_KEY=your_openai_api_key
-AZURE_SQL_CONNECTIONSTRING=DRIVER={ODBC Driver 17 for SQL Server};SERVER=your_sql_server;DATABASE=AdventureWorks
+3. **Install dependencies:**
 
-uvicorn app.main:app --reload
+    ```bash
+    pip install -r requirements.txt
+    ```
 
+4. **Create a `.env` file in the project root with the following environment variables:**
 
+    ```plaintext
+    AZURE_OPENAI_ENDPOINT=https://your_openai_endpoint
+    AZURE_OPENAI_API_KEY=your_openai_api_key
+    AZURE_SQL_CONNECTIONSTRING=DRIVER={ODBC Driver 17 for SQL Server};SERVER=your_sql_server;DATABASE=AdventureWorks
+    ```
 
+5. **Ensure your Azure SQL Server is configured to accept Azure AD tokens and that your Azure AD principal has the necessary permissions.**
+
+## Run the Application
+
+    ```bash
+    uvicorn app.main:app --reload
+    ```
