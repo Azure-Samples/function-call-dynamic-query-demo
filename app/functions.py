@@ -8,7 +8,6 @@ from decimal import Decimal
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 import sqlparse
-from sqlparse.sql import IdentifierList, Identifier
 from sqlparse.tokens import Keyword, DML
 
 # Setup logging
@@ -23,6 +22,10 @@ connection_string = os.getenv('AZURE_SQL_CONNECTIONSTRING')
 
 # Timeout in seconds
 QUERY_TIMEOUT = 10
+
+# Function to handle query timeout
+def handler(signum, frame):
+    raise TimeoutError("This query took longer than the allotted time. Either the database server is experiencing performance issues or the generated query is too expensive. Please inspect the query or retry.")
 
 # Function to get a database connection
 def get_conn():
