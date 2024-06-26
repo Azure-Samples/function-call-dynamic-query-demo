@@ -9,14 +9,7 @@ Before you begin, ensure you have the following:
 - Python 3.8 or higher
 - An Azure OpenAI account with API key and endpoint
 - An Azure SQL Database with appropriate schema and data
-- The following Python packages installed:
-  - `fastapi`
-  - `uvicorn`
-  - `openai`
-  - `azure-identity`
-  - `pyodbc`
-  - `python-dotenv`
-  - `pydantic`
+
 
 ## Setup
 
@@ -52,6 +45,5 @@ Before you begin, ensure you have the following:
 
 ## Run the Application
 
-    ```bash
-    uvicorn app.main:app --reload
-    ```
+```bash
+uvicorn app.main:app --reload
