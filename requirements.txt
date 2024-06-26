@@ -1,8 +1,9 @@
 azure_storage==0.37.0
 fastapi==0.111.0
-openai==1.35.3
+openai==1.35.5
 pydantic==2.7.4
 pyodbc==5.1.0
 python-dotenv==1.0.1
 SQLAlchemy==2.0.30
 SQLAlchemy==2.0.31
+sqlparse==0.5.0
