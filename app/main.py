@@ -11,7 +11,7 @@ from pydantic import BaseModel
 class AskRequest(BaseModel):
     message: str
 
-# Setup logging
+# Setup logging to troubleshoot if need be
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ load_dotenv()
 
 app = FastAPI()
 
-app.include_router(router)  # Include the router
+app.include_router(router)
 
 # Define the Azure OpenAI client
 client = AzureOpenAI(
@@ -72,7 +72,7 @@ schema_info = {
 # Root endpoint for testing
 @app.get("/")
 async def root():
-    return {"message": "Hello, World!"}
+    return {"message": "Establishing Root Endpoint"}
 @app.post("/ask/")
 async def ask_openai(request: AskRequest):
     try:
@@ -107,7 +107,7 @@ async def ask_openai(request: AskRequest):
         ]
 
         response = client.chat.completions.create(
-            model="gpt-4",  # replace with your model deployment name
+            model="gpt-4", 
             messages=messages,
             tools=tools,
             tool_choice="auto",

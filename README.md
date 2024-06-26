@@ -38,7 +38,7 @@ Before you begin, ensure you have the following:
     ```plaintext
     AZURE_OPENAI_ENDPOINT=https://your_openai_endpoint
     AZURE_OPENAI_API_KEY=your_openai_api_key
-    AZURE_SQL_CONNECTIONSTRING=DRIVER={ODBC Driver 17 for SQL Server};SERVER=your_sql_server;DATABASE=AdventureWorks
+    AZURE_SQL_CONNECTIONSTRING=DRIVER={ODBC Driver 18 for SQL Server};SERVER=your_sql_server;DATABASE=AdventureWorks
     ```
 
 5. **Ensure your Azure SQL Server is configured to accept Azure AD tokens and that your Azure AD principal has the necessary permissions.**
