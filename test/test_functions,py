@@ -1,0 +1,23 @@
+# tests/test_functions.py
+
+import pytest
+from unittest.mock import patch, MagicMock
+from app.functions import execute_query, get_conn
+
+# Mocking database connection
+@pytest.fixture
+def mock_db_conn():
+    with patch('app.functions.get_conn') as mock:
+        conn = MagicMock()
+        cursor = conn.cursor.return_value
+        cursor.fetchall.return_value = [(1, 'red')]
+        cursor.description = [('count',)]
+        mock.return_value = conn
+        yield mock
+
+def test_execute_query(mock_db_conn):
+    query = "SELECT COUNT(*) FROM SalesLT.Product WHERE Color = 'red'"
+    result = execute_query(query)
+    assert result is not None
+    assert "error" not in result
+    assert '"count": 1' in result

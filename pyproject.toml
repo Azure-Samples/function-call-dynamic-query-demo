@@ -1,13 +1,18 @@
-[tool.ruff] 
+[tool.ruff]
 line-length = 100
 ignore = ["D203"]
 show-source = true
 
-[tool.black] 
-line-length = 100 
-target-version = ['py39'] 
-extend-exclude = ''' 
-( 
-  ^/tests/* 
-) 
-''' 
+[tool.black]
+line-length = 100
+target-version = ['py311']
+extend-exclude = '''
+(
+  ^/testing_code/
+)
+'''
+
+[tool.pytest.ini_options]
+addopts = "-ra --cov"
+testpaths = ["test"]
+pythonpath = ['.']

@@ -8,7 +8,7 @@ from decimal import Decimal
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 import sqlparse
-from sqlparse.tokens import Keyword, DML
+from sqlparse.tokens import DML
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -21,7 +21,8 @@ load_dotenv()
 connection_string = os.getenv("AZURE_SQL_CONNECTIONSTRING")
 
 # Timeout in seconds
-QUERY_TIMEOUT = 10
+QUERY_TIMEOUT = 30
+
 
 # Function to handle query timeout
 def handler(signum, frame):
