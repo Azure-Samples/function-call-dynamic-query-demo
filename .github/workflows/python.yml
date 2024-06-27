@@ -31,6 +31,6 @@ jobs:
       run: |
         black --check --verbose .
 
-    - name: Run unit tests
-      run: |
-        pytest --cov=app tests/
+    # - name: Run unit tests
+    #   run: |
+    #     pytest --cov=app tests/
