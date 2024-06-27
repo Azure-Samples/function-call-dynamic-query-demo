@@ -1,4 +1,4 @@
-# FastAPI App to Dynamically Query SQL Database Using Azure OpenAI Functions
+# FastAPI App to Dynamically Query Azure SQL Database Using Azure OpenAI Functions
 
 The application allows you to send a message to the API, which then generates a SQL query, executes it against the database, and returns the results.
 This project demonstrates how to use FastAPI to create an API endpoint that interacts with Azure OpenAI and an Azure SQL database. This demonstration leverge the 'AdventureWorks' sample database in Azure SQL.
