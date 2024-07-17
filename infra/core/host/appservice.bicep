@@ -20,16 +20,6 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
     serverFarmId: appServicePlan.id
     siteConfig: {
       linuxFxVersion: 'PYTHON|3.8'
-      appSettings: [
-        {
-          name: 'WEBSITE_RUN_FROM_PACKAGE'
-          value: 'https://github.com/your-repo/your-app/archive/refs/heads/main.zip'
-        },
-        {
-          name: 'STARTUP_COMMAND'
-          value: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker app:app'
-        }
-      ]
     }
     httpsOnly: true
   }
@@ -40,4 +30,49 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
     }
   }
   tags: tags
+}
+
+resource webAppConfig 'Microsoft.Web/sites/config@2022-09-01' = {
+  name: 'web'
+  parent: webApp
+  properties: {
+    appSettings: [
+      {
+        name: 'WEBSITE_RUN_FROM_PACKAGE'
+        value: 'https://github.com/your-repo/your-app/archive/refs/heads/main.zip'
+      }
+      {
+        name: 'STARTUP_COMMAND'
+        value: './scripts/start.sh'
+      }
+      {
+        name: 'SQL_SERVER'
+        value: '$(SQL_SERVER)'
+      }
+      {
+        name: 'SQL_DATABASE'
+        value: '$(SQL_DATABASE)'
+      }
+      {
+        name: 'SQL_USERNAME'
+        value: '$(SQL_USERNAME)'
+      }
+      {
+        name: 'SQL_PASSWORD'
+        value: '$(SQL_PASSWORD)'
+      }
+      {
+        name: 'AZURE_SQL_CONNECTIONSTRING'
+        value: '$(AZURE_SQL_CONNECTIONSTRING)'
+      }
+      {
+        name: 'AZURE_OPENAI_API_KEY'
+        value: '$(AZURE_OPENAI_API_KEY)'
+      }
+      {
+        name: 'AZURE_OPENAI_ENDPOINT'
+        value: '$(AZURE_OPENAI_ENDPOINT)'
+      }
+    ]
+  }
 }

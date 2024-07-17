@@ -1,0 +1,35 @@
+name: Azure Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Create resource group
+      run: |
+        az group create --name "${{ secrets.AZURE_RESOURCE_GROUP }}" --location "${{ secrets.AZURE_LOCATION }}"
+
+    - name: Deploy Bicep template
+      run: |
+        az deployment group create \
+          --resource-group "${{ secrets.AZURE_RESOURCE_GROUP }}" \
+          --template-file infra/main.bicep \
+          --parameters location="${{ secrets.AZURE_LOCATION }}" name="${{ secrets.AZURE_PROJECT_NAME }}" \
+          tags='{}'
+
+    - name: Create SQL user and assign roles
+      run: |
+        bash scripts/create-sql-user.sh "${{ secrets.AZURE_SQL_SERVER }}" "${{ secrets.AZURE_SQL_DATABASE }}" "${{ secrets.AZURE_MANAGED_IDENTITY_ID }}" "${{ secrets.AZURE_RESOURCE_GROUP }}" "${{ secrets.AZURE_SQL_ADMIN_USER }}" "${{ secrets.AZURE_SQL_ADMIN_PASSWORD }}"

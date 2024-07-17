@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true
+            },
+            "previewLimit": 50,
+            "server": "dwtrial.database.windows.net",
+            "port": 1433,
+            "driver": "MSSQL",
+            "name": "sql_database",
+            "database": "adventureworkstrial",
+            "username": "zedan_10",
+            "password": "Winter_123"
+        }
+    ]
+}

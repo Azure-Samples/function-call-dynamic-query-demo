@@ -1,25 +1,27 @@
-// param location string
-// param resourceGroupName string
-// param deployAzureOpenAI bool = true
+param name string
+param location string
 
-// resource openAiResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' existing = {
-//   name: resourceGroupName
-// }
 
-// resource openAi 'Microsoft.CognitiveServices/accounts@2021-04-30' = if (deployAzureOpenAI) {
-//   name: 'openai-gpt4o'
-//   location: location
-//   kind: 'OpenAI'
-//   sku: {
-//     name: 'S0'
-//   }
-//   properties: {
-//     capabilities: [
-//       {
-//         name: 'GPT-4o'
-//       }
-//     ]
-//   }
-// }
+resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
+  name: '${name}-openai'
+  location: location
+  kind: 'OpenAI'
+  sku: {
+    name: 'S0'
+  }
+  properties: {
+    customSubDomainName: '${name}-openai'
+  }
+  resource gpt4o 'deployments' = {
+    name: 'gpt-4o'
+    properties: {
+      model: {
+        format: 'OpenAI'
+        name: 'gpt-4o'
+        version: '2024-05-13'
+      }
+    }
+  }
+}
 
-// output openAiEndpoint string = openAi.properties.endpoint
+output openAIResourceId string = openAI.id
