@@ -30,6 +30,6 @@ jobs:
           --parameters location="${{ secrets.AZURE_LOCATION }}" name="${{ secrets.AZURE_PROJECT_NAME }}" \
           tags='{}'
 
-    - name: Create SQL user and assign roles
+    - name: Create SQL user and assign roles for MI
       run: |
         bash scripts/create-sql-user.sh "${{ secrets.AZURE_SQL_SERVER }}" "${{ secrets.AZURE_SQL_DATABASE }}" "${{ secrets.AZURE_MANAGED_IDENTITY_ID }}" "${{ secrets.AZURE_RESOURCE_GROUP }}" "${{ secrets.AZURE_SQL_ADMIN_USER }}" "${{ secrets.AZURE_SQL_ADMIN_PASSWORD }}"
