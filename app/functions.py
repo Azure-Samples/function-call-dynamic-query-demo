@@ -31,7 +31,7 @@ def handler(signum, frame):
     )
 
 
-# Function to get a database connection
+# Function to get a database connection via pyodbc and entra ID
 def get_conn():
     try:
         credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
@@ -42,7 +42,6 @@ def get_conn():
         SQL_COPT_SS_ACCESS_TOKEN = (
             1256  # This connection option is defined by Microsoft in msodbcsql.h
         )
-
         conn = pyodbc.connect(
             connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct}
         )
