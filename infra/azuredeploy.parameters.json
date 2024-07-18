@@ -6,7 +6,7 @@
       "value": "eastus"
     },
     "name": {
-      "value": "myapp"
+      "value": "myapp-test"
     },
     "tags": {
       "value": {
@@ -19,6 +19,12 @@
     },
     "administratorPassword": {
       "value": "yourStrongPassword123"
+    },
+    "appServicePlanName": {
+      "value": "myapp-asp"
+    },
+    "appServiceSkuName": {
+      "value": "B1"
     }
   }
 }

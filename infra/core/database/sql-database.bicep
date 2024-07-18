@@ -20,7 +20,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
       administratorType: 'ActiveDirectory'
       principalType: 'User'
       azureADOnlyAuthentication: false
-      login: administratorLogin
+      login: 'abdulzedan'
       tenantId: subscription().tenantId
       // sid: administratorAADId
     }
