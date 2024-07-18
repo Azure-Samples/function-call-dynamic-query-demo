@@ -1,5 +1,6 @@
 param name string
 param location string
+param chatgpt4oDeploymentCapacity int = 50
 
 
 resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
@@ -8,6 +9,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   kind: 'OpenAI'
   sku: {
     name: 'S0'
+    capacity:chatgpt4oDeploymentCapacity
   }
   properties: {
     customSubDomainName: '${name}-openai'

@@ -8,6 +8,13 @@ targetScope = 'subscription'
 param location string
 param name string
 param tags object = {}
+param administratorLogin string
+@secure()
+param administratorPassword string
+
+param appServicePlanName string
+param appServiceSkuName string
+
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${name}-rg'
@@ -15,15 +22,51 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
+module appServicePlan 'core/host/appserviceplan.bicep' = {
+  name: 'appserviceplan'
+  scope: resourceGroup
+  params: {
+    name: appServicePlanName
+    location: location
+    tags: tags
+    sku: {
+      name: appServiceSkuName
+      capacity: 1
+    }
+    kind: 'linux'
+  }
+}
+
+// Create an App Service Plan to group applications under the same payment plan and SKU
+
+
 module appService 'core/host/appservice.bicep' = {
   name: 'appServiceDeployment'
   scope: resourceGroup
   params: {
-    name: name
+    name: '${name}-webapp'
     location: location
     tags: tags
+    appServicePlanId: appServicePlan.outputs.id
+    managedIdentityId: managedIdentity.outputs.managedIdentityId
+    runtimeName: 'python'
+    runtimeVersion: '3.11'
+    appCommandLine: './scripts/start.sh'
+    scmDoBuildDuringDeployment: true
+    githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'
+    githubBranch: 'main'
+    appSettings: {
+      SQL_SERVER: '$(SQL_SERVER)'
+      SQL_DATABASE: '$(SQL_DATABASE)'
+      SQL_USERNAME: '$(SQL_USERNAME)'
+      SQL_PASSWORD: '$(SQL_PASSWORD)'
+      AZURE_SQL_CONNECTIONSTRING: '$(AZURE_SQL_CONNECTIONSTRING)'
+      AZURE_OPENAI_API_KEY: '$(AZURE_OPENAI_API_KEY)'
+      AZURE_OPENAI_ENDPOINT: '$(AZURE_OPENAI_ENDPOINT)'
+    }
   }
 }
+
 
 module sqlDatabase 'core/database/sql-database.bicep' = {
   name: 'sqlDatabaseDeployment'
@@ -32,9 +75,9 @@ module sqlDatabase 'core/database/sql-database.bicep' = {
     location: location
     serverName: '${name}-sql-server'
     databaseName: '${name}-database'
-    administratorLogin: 'adminUser'
-    administratorPassword: 'adminPassword'
-    administratorAADId: 'aadId'
+    administratorLogin: administratorLogin
+    administratorPassword: administratorPassword
+    // administratorAADId: 'aadId'
   }
 }
 
@@ -72,7 +115,6 @@ module roleAssignments 'core/identity/roleAssignments.bicep' = {
   name: 'roleAssignmentsDeployment'
   scope: resourceGroup
   params: {
-    name: name
     openAIResourceId: openAIService.outputs.openAIResourceId
     sqlResourceId: sqlDatabase.outputs.sqlResourceId
     managedIdentityId: managedIdentity.outputs.managedIdentityId

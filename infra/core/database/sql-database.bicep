@@ -4,7 +4,7 @@ param databaseName string
 param administratorLogin string
 @secure()
 param administratorPassword string
-param administratorAADId string
+// param administratorAADId string
 param tags object = {}
 
 resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
@@ -22,7 +22,7 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
       azureADOnlyAuthentication: false
       login: administratorLogin
       tenantId: subscription().tenantId
-      sid: administratorAADId
+      // sid: administratorAADId
     }
   }
   tags: tags
