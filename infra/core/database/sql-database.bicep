@@ -16,14 +16,14 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
     version: '12.0'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
-    administrators: {
-      administratorType: 'ActiveDirectory'
-      principalType: 'User'
-      azureADOnlyAuthentication: false
-      login: 'abdulzedan'
-      tenantId: subscription().tenantId
-      // sid: administratorAADId
-    }
+    // administrators: {
+    //   administratorType: 'ActiveDirectory'
+    //   principalType: 'User'
+    //   azureADOnlyAuthentication: false
+    //   login: 'abdulzedan'
+    //   tenantId: subscription().tenantId
+    //   // sid: administratorAADId
+    // }
   }
   tags: tags
 }
