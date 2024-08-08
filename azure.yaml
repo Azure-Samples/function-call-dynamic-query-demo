@@ -1,0 +1,13 @@
+name: Azure DevOps Project
+
+metadata:
+  template: azure-fastapi-template
+  version: 1.0.0
+
+projects:
+  - name: fastapi-app
+    type: app
+    language: python
+    path: .
+    infra: ./infra
+
