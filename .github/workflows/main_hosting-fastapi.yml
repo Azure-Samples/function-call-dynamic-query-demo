@@ -26,10 +26,10 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-        
+
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Zip artifact for deployment
@@ -61,13 +61,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_CF0B141957A84C30949AF4FC3C4D6057 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_346442AC6F5A49A9B47367CBB1F36867 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5E69FB19CEA24E249FA0FA232E506348 }}
+          client-id: ${{ secrets.CLIENTID }}
+          tenant-id: ${{ secrets.TENANTID }}
+          subscription-id: ${{ secrets.SUBSCRIPTIONID }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
@@ -75,4 +75,3 @@ jobs:
         with:
           app-name: 'hosting-fastapi'
           slot-name: 'Production'
-          
