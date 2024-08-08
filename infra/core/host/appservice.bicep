@@ -129,7 +129,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
     properties: {
       repoUrl: githubRepo
       branch: githubBranch
-      isManualIntegration: true
+      isManualIntegration: false
       isGitHubAction: true
       deploymentRollbackEnabled: true
     }
@@ -139,4 +139,5 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
 output id string = appService.id
 output name string = appService.name
 output uri string = 'https://${appService.properties.defaultHostName}'
-output identityPrincipalId string = appService.identity.principalId
+output identityPrincipalId string = appService.identity.userAssignedIdentities[managedIdentityId].principalId
+
