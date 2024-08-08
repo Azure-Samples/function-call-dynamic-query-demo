@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": {
-      "value": "eastus"
+      "value": "eastus2"
     },
     "name": {
-      "value": "myapp-test"
+      "value": "myapp-test-dev-testing"
     },
     "tags": {
       "value": {
@@ -15,16 +15,19 @@
       }
     },
     "administratorLogin": {
-      "value": "adminUser"
+      "value": "ZEDAN_TESTING"
     },
     "administratorPassword": {
-      "value": "yourStrongPassword123"
+      "value": "yourStrongPassword@123"
     },
     "appServicePlanName": {
-      "value": "myapp-asp"
+      "value": "myapp-asp-sd"
     },
     "appServiceSkuName": {
       "value": "B1"
     }
   }
 }
+
+
+
