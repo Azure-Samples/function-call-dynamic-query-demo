@@ -1,13 +1,19 @@
-name: Azure DevOps Project
-
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+name: rag-postgres-openai-python
 metadata:
-  template: azure-fastapi-template
-  version: 1.0.0
+    template: rag-postgres-openai-python@0.0.1
+services:
+    web:
+        project: ./app/
+        language: py
+        module: web
+        host: appservice
 
-projects:
-  - name: fastapi-app
-    type: app
-    language: python
-    path: .
-    infra: ./infra
+hooks:
+    postprovision:
+        posix:
+            shell: sh
+            run: ./scripts/create-sq-user..sh
+            interactive: true
+            continueOnError: false
 
