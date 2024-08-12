@@ -101,7 +101,7 @@ module openAIService 'core/ai/openai.bicep' = {
   }
 }
 
-module applicationInsights 'core/host/applicationInsights.bicep' = {
+module applicationinsights 'core/host/applicationInsights.bicep' = {
   name: 'applicationInsightsDeployment'
   scope: resourceGroup
   params: {
