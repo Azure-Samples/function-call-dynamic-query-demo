@@ -2,7 +2,7 @@ param openAIResourceId string
 param sqlResourceId string
 param managedIdentityId string
 
-resource openAIResource 'Microsoft.CognitiveServices/accounts@2021-04-01' existing = {
+resource openAIResource 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' existing = {
   name: openAIResourceId
 }
 
