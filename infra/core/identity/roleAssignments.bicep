@@ -1,5 +1,5 @@
-param openAIResourceId string
-param sqlResourceId string
+// param openAIResourceId string
+// param sqlResourceId string
 // param managedIdentityId string
 param managedIdentityPrincipalId string
 
@@ -8,11 +8,11 @@ param roledefinitionsql string = '9b7fa17d-e63e-47b0-bb0a-15c516ac86ec'
 
 
 resource openAIResource 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' existing = {
-  name: openAIResourceId
+  name: 'openAIDeployment'
 }
 
 resource sqlServerResource 'Microsoft.Sql/servers@2023-08-01-preview' existing = {
-  name: sqlResourceId
+  name: 'sqlDatabaseDeployment'
 }
 
 resource openAIRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
@@ -36,6 +36,6 @@ resource sqlRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' 
   }
 }
 
-// Add these outputs for debugging
+// adding outputs for debugging
 output openAIResourceIdOut string = openAIResource.id
 output sqlResourceIdOut string = sqlServerResource.id
