@@ -8,7 +8,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   location: location
   kind: 'OpenAI'
   sku: {
-    name: 'S0'
+    name: 'Standard'
     capacity:chatgpt4oDeploymentCapacity
   }
   properties: {
