@@ -59,3 +59,4 @@ resource firewallRule 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' =
 }
 
 output sqlResourceId string = sqlServer.id
+output sqlResourcename string = sqlServer.name

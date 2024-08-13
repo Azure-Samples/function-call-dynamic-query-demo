@@ -1,5 +1,5 @@
-// param openAIResourceId string
-// param sqlResourceId string
+param openAIResourcename string
+param sqlResourcename string
 // param managedIdentityId string
 param managedIdentityPrincipalId string
 
