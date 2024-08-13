@@ -1,6 +1,7 @@
 param openAIResourceId string
 param sqlResourceId string
 param managedIdentityId string
+param managedIdentityPrincipalId string
 
 resource openAIResource 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' existing = {
   name: openAIResourceId
@@ -16,7 +17,7 @@ resource openAIRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-0
   properties: {
     principalType: 'ServicePrincipal'
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd')
-    principalId: managedIdentityId
+    principalId: managedIdentityPrincipalId
   }
 }
 
@@ -26,7 +27,7 @@ resource sqlRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' 
   properties: {
     principalType: 'ServicePrincipal'
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd')
-    principalId: managedIdentityId
+    principalId: managedIdentityPrincipalId
   }
 }
 
