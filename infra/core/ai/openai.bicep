@@ -4,7 +4,7 @@ param chatgpt4oDeploymentCapacity int = 50
 
 
 resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
-  name: '${name}-openai-dev'
+  name: '${name}-openai-dev2'
   location: location
   kind: 'OpenAI'
   sku: {
@@ -13,7 +13,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
     capacity:chatgpt4oDeploymentCapacity
   }
   properties: {
-    customSubDomainName: '${name}-openai-dev'
+    customSubDomainName: '${name}-openai-dev2'
   }
   resource gpt4o 'deployments' = {
     name: 'gpt-4o'
