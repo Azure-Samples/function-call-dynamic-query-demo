@@ -13,7 +13,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
     capacity:chatgpt4oDeploymentCapacity
   }
   properties: {
-    customSubDomainName: '${name}-openai'
+    customSubDomainName: '${name}-openai-d'
   }
   resource gpt4o 'deployments' = {
     name: 'gpt-4o'
