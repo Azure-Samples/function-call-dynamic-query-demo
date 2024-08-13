@@ -111,9 +111,15 @@ module applicationinsights 'core/host/applicationinsights.bicep' = {
   }
 }
 
+// Assign Roles
 module roleAssignments 'core/identity/roleAssignments.bicep' = {
   name: 'roleAssignmentsDeployment'
   scope: resourceGroup
+  dependsOn: [
+    openAIService
+    sqlDatabase
+    managedIdentity
+  ]
   params: {
     openAIResourceId: openAIService.outputs.openAIResourceId
     sqlResourceId: sqlDatabase.outputs.sqlResourceId
@@ -125,3 +131,4 @@ module roleAssignments 'core/identity/roleAssignments.bicep' = {
 output resourceGroupName string = resourceGroup.name
 output managedIdentityId string = managedIdentity.outputs.managedIdentityId
 output openAIResourceId string = openAIService.outputs.openAIResourceId
+

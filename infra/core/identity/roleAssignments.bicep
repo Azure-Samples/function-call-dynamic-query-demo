@@ -29,3 +29,7 @@ resource sqlRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' 
     principalId: managedIdentityId
   }
 }
+
+// Add these outputs for debugging
+output openAIResourceIdOut string = openAIResource.id
+output sqlResourceIdOut string = sqlServerResource.id
