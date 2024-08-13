@@ -123,7 +123,7 @@ module roleAssignments 'core/identity/roleAssignments.bicep' = {
   params: {
     openAIResourceId: openAIService.outputs.openAIResourceId
     sqlResourceId: sqlDatabase.outputs.sqlResourceId
-    managedIdentityId: managedIdentity.outputs.managedIdentityId
+    // managedIdentityId: managedIdentity.outputs.managedIdentityId
     managedIdentityPrincipalId: managedIdentity.outputs.managedIdentityPrincipalId
   }
 }
