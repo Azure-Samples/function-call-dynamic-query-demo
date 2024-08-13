@@ -4,7 +4,7 @@ param chatgpt4oDeploymentCapacity int = 50
 
 
 resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
-  name: '${name}-openai'
+  name: '${name}-openai-d'
   location: location
   kind: 'OpenAI'
   sku: {
