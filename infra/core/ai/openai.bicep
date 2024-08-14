@@ -29,5 +29,5 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
 
 output openAIResourceId string = openAI.id
 output openAIResourceName string = openAI.name
-
-
+output openAIEndpoint string = openAI.properties.endpoint
+output openAIVersion string = openAI.properties.apiProperties.apiVersion

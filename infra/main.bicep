@@ -53,19 +53,21 @@ module appService 'core/host/appservice.bicep' = {
     runtimeVersion: '3.11'
     appCommandLine: './scripts/start.sh'
     scmDoBuildDuringDeployment: true
-    githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'
-    githubBranch: 'main'
+    // githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'
+    // githubBranch: 'main'
     appSettings: {
-      SQL_SERVER: '$(SQL_SERVER)'
-      SQL_DATABASE: '$(SQL_DATABASE)'
-      SQL_USERNAME: '$(SQL_USERNAME)'
-      SQL_PASSWORD: '$(SQL_PASSWORD)'
-      AZURE_SQL_CONNECTIONSTRING: '$(AZURE_SQL_CONNECTIONSTRING)'
-      AZURE_OPENAI_API_KEY: '$(AZURE_OPENAI_API_KEY)'
-      AZURE_OPENAI_ENDPOINT: '$(AZURE_OPENAI_ENDPOINT)'
+      SQL_SERVER: sqlDatabase.outputs.sqlHoutName
+      SQL_DATABASE: sqlDatabase.outputs.sqlDatabaseName
+      SQL_USERNAME: sqlDatabase.outputs.sqlDatabaseuser
+      SQL_PASSWORD: administratorPassword
+      AZURE_SQL_CONNECTIONSTRING: sqlDatabase.outputs.connectionString
+      AZURE_CLIENT_ID: managedIdentity.outputs.managedIdentityPrincipalId
+      AZURE_OPENAI_ENDPOINT: openAIService.outputs.openAIEndpoint
     }
   }
 }
+
+
 
 
 module sqlDatabase 'core/database/sql-database.bicep' = {

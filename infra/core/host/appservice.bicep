@@ -16,8 +16,8 @@ param runtimeNameAndVersion string = '${runtimeName}|${runtimeVersion}'
 param runtimeVersion string
 
 // GitHub Deployment Properties
-param githubRepo string
-param githubBranch string = 'main'
+// param githubRepo string
+// param githubBranch string = 'main'
 
 
 // Microsoft.Web/sites Properties
@@ -124,20 +124,19 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
     }
   }
 
-  resource configSourceControl 'sourcecontrols' = {
-    name: 'web'
-    properties: {
-      repoUrl: githubRepo
-      branch: githubBranch
-      isManualIntegration: false
-      isGitHubAction: true
-      deploymentRollbackEnabled: true
-    }
-  }
+//   resource configSourceControl 'sourcecontrols' = {
+//     name: 'web'
+//     properties: {
+//       repoUrl: githubRepo
+//       branch: githubBranch
+//       isManualIntegration: false
+//       isGitHubAction: true
+//       deploymentRollbackEnabled: true
+//     }
+//   }
 }
 
 output id string = appService.id
 output name string = appService.name
 output uri string = 'https://${appService.properties.defaultHostName}'
 output identityPrincipalId string = appService.identity.userAssignedIdentities[managedIdentityId].principalId
-
