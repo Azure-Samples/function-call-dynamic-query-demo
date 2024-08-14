@@ -55,7 +55,7 @@ module appService 'core/host/appservice.bicep' = {
   params: {
     name: '${name}-webapp'
     location: location
-    tags: tags
+    tags: union(tags, { 'azd-service-name': 'app' })
     appServicePlanId: appServicePlan.outputs.id
     managedIdentityId: managedIdentity.outputs.managedIdentityId
     runtimeName: 'python'
