@@ -9,12 +9,10 @@ metadata:
         - OpenAI
         - RAG
 services:
-    web:
+    app:
         project: ./app/
         language: py
-        module: web
         host: appservice
-
 hooks:
     postprovision:
         posix:
