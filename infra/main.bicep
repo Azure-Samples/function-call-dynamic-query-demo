@@ -8,12 +8,21 @@ targetScope = 'subscription'
 param location string
 param name string
 param tags object = {}
+
+//sql param
 param administratorLogin string
 @secure()
 param administratorPassword string
 
+
+// app service
 param appServicePlanName string
 param appServiceSkuName string
+
+// openai
+param chatgpt4oDeploymentVersion string = '2024-05-13'
+param chatgpt4oDeploymentName string = 'gpt-4o'
+
 
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -63,6 +72,8 @@ module appService 'core/host/appservice.bicep' = {
       AZURE_SQL_CONNECTIONSTRING: sqlDatabase.outputs.connectionString
       AZURE_CLIENT_ID: managedIdentity.outputs.managedIdentityPrincipalId
       AZURE_OPENAI_ENDPOINT: openAIService.outputs.openAIEndpoint
+      AZURE_OPENAI_VERSION: chatgpt4oDeploymentVersion
+      AZURE_OPENAI_CHAT_DEPLOYMENT: chatgpt4oDeploymentName
     }
   }
 }
