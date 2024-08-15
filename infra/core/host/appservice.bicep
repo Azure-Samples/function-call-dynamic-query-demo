@@ -63,18 +63,6 @@ var appServiceProperties = {
 }
 
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
-  name: '${name}-asp'
-  location: location
-  sku: {
-    name: 'B1'
-    tier: 'Basic'
-    size: 'B1'
-    capacity:1
-  }
-  tags: tags
-}
-
 resource appService 'Microsoft.Web/sites@2022-03-01' = {
   name: name
   location: location

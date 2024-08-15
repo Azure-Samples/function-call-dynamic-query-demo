@@ -46,9 +46,6 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
   }
 }
 
-// Create an App Service Plan to group applications under the same payment plan and SKU
-
-
 module appService 'core/host/appservice.bicep' = {
   name: 'appServiceDeployment'
   scope: resourceGroup
