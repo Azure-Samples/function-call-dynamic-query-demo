@@ -55,7 +55,7 @@ module appService 'core/host/appservice.bicep' = {
   params: {
     name: '${name}-webapp'
     location: location
-    tags: union(tags, { 'azd-service-name': 'app' })
+    tags: union(tags, { 'azd-service-name': 'appdev' })
     appServicePlanId: appServicePlan.outputs.id
     managedIdentityId: managedIdentity.outputs.managedIdentityId
     runtimeName: 'python'
@@ -65,7 +65,7 @@ module appService 'core/host/appservice.bicep' = {
     // githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'
     // githubBranch: 'main'
     appSettings: {
-      SQL_SERVER: sqlDatabase.outputs.sqlHoutName
+      SQL_SERVER: sqlDatabase.outputs.sqlHostName
       SQL_DATABASE: sqlDatabase.outputs.sqlDatabaseName
       SQL_USERNAME: sqlDatabase.outputs.sqlDatabaseuser
       SQL_PASSWORD: administratorPassword
@@ -145,4 +145,8 @@ module roleAssignments 'core/identity/roleAssignments.bicep' = {
 output resourceGroupName string = resourceGroup.name
 output managedIdentityId string = managedIdentity.outputs.managedIdentityId
 output openAIResourceId string = openAIService.outputs.openAIResourceId
+output SQL_SERVER string = sqlDatabase.outputs.sqlHostName
+output SQL_DATABASE string = sqlDatabase.outputs.sqlDatabaseName
+output APP_SERVICE_NAME string = appService.outputs.SERVICE_WEB_NAME
+output ADMIN_USERNAME string = sqlDatabase.outputs.sqlDatabaseuser
 

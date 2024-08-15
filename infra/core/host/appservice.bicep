@@ -136,6 +136,14 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
 //   }
 }
 
+
+
+
+
+output SERVICE_WEB_NAME string = appService.name
+output SERVICE_WEB_URI string = appService.properties.defaultHostName
+
+
 output id string = appService.id
 output name string = appService.name
 output uri string = 'https://${appService.properties.defaultHostName}'
