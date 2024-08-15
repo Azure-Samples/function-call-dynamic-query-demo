@@ -60,7 +60,7 @@ resource firewallRule 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' =
 
 output sqlResourceId string = sqlServer.id
 output sqlResourcename string = sqlServer.name
-output sqlHoutName string = sqlServer.properties.fullyQualifiedDomainName
+output sqlHostName string = sqlServer.properties.fullyQualifiedDomainName
 output sqlDatabaseName string = sqlDatabase.name
 output connectionString string = 'Driver={ODBC Driver 18 for SQL Server};Server=tcp:${sqlServer.properties.fullyQualifiedDomainName}.database.windows.net,1433;Database=${sqlDatabase.name};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30'
 output sqlDatabaseuser string = administratorLogin
