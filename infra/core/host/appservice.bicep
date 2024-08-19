@@ -20,6 +20,10 @@ param runtimeVersion string
 // param githubBranch string = 'main'
 
 
+//enableoryxbuild
+param enableOryxBuild bool = contains(kind, 'linux')
+
+
 // Microsoft.Web/sites Properties
 param kind string = 'app,linux'
 
@@ -81,6 +85,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
     properties: union(appSettings,
       {
         SCM_DO_BUILD_DURING_DEPLOYMENT: string(scmDoBuildDuringDeployment)
+        ENABLE_ORYX_BUILD: string(enableOryxBuild)
       },
       runtimeName == 'python' ? { PYTHON_ENABLE_GUNICORN_MULTIWORKERS: 'true' } : {})
   }

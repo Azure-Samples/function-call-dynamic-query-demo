@@ -7,9 +7,14 @@ services:
         host: appservice
 hooks:
     postprovision:
+        windows:
+            shell: pwsh
+            run: .\scripts\create-sql-user.ps1
+            interactive: true
+            continueOnError: false
         posix:
             shell: sh
-            run: ./scripts/create-sq-user..sh
+            run: ./scripts/create-sq-user.sh
             interactive: true
             continueOnError: false
 
