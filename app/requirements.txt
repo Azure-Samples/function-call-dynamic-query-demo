@@ -4,6 +4,6 @@ openai==1.41.0
 pydantic==2.8.2
 pyodbc==5.1.0
 python-dotenv==1.0.1
-SQLAlchemy==2.0.30
+# SQLAlchemy==2.0.30
 SQLAlchemy==2.0.31
 sqlparse==0.5.1
