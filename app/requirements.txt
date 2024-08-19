@@ -1,4 +1,4 @@
-azure_storage==0.37.0
+azure-identity==1.17.1
 fastapi==0.112.1
 openai==1.41.0
 pydantic==2.8.2
