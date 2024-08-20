@@ -51,7 +51,6 @@ var coreConfig = {
   ftpsState: ftpsState
   http20Enabled: true
   httpLoggingEnabled: true
-  scmType: 'GitHubAction'
   numberOfWorkers: 1
   appCommandLine: appCommandLine
   minTlsVersion: '1.2'

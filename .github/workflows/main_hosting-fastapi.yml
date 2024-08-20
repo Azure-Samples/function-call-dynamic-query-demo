@@ -76,3 +76,8 @@ jobs:
 
 
 
+
+        # - name: Provision Infrastructure
+        # run: azd provision --no-prompt
+        # env:
+        #   AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
