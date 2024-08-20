@@ -7,3 +7,4 @@ python-dotenv==1.0.1
 # SQLAlchemy==2.0.30
 SQLAlchemy==2.0.31
 sqlparse==0.5.1
+uvicorn==0.30.1
