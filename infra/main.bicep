@@ -56,7 +56,7 @@ module appService 'core/host/appservice.bicep' = {
     appServicePlanId: appServicePlan.outputs.id
     managedIdentityId: managedIdentity.outputs.managedIdentityId
     runtimeName: 'python'
-    runtimeVersion: '3.11'
+    runtimeVersion: '3.10'
     appCommandLine: './scripts/start.txt'
     scmDoBuildDuringDeployment: true
     // githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'

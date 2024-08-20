@@ -7,7 +7,7 @@ from azure.identity import DefaultAzureCredential
 logger = logging.getLogger("sqlapp")
 
 
-# Function to get a database connection via pyodbc and Azure AD (Entra ID)
+# Function to get a database connection via pyodbc and Azure ID
 def get_conn(server, database):
     try:
         credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
@@ -16,17 +16,12 @@ def get_conn(server, database):
         )
         token_struct = struct.pack(f"<I{len(token_bytes)}s", len(token_bytes), token_bytes)
         SQL_COPT_SS_ACCESS_TOKEN = (
-            1256
-        )  # This connection option is defined by Microsoft in msodbcsql.h
-
-        connection_string = (
-            f"DRIVER={{ODBC Driver 18 for SQL Server}};"
-            f"SERVER=tcp:{server}.database.windows.net,1433;"
-            f"DATABASE={database};"
-            f"Encrypt=yes;"
-            f"TrustServerCertificate=no;"
-            f"Connection Timeout=30;"
+            1256  # This connection option is defined by Microsoft in msodbcsql.h
         )
+
+        # Building the connection string using the provided server and database
+        connection_string = f"Driver={{ODBC Driver 18 for SQL Server}};Server=tcp:{server},1433;Database={database};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30"
+
         conn = pyodbc.connect(
             connection_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_struct}
         )
@@ -67,9 +62,11 @@ def main():
     parser = argparse.ArgumentParser(
         description="Assign roles to managed identity in Azure SQL Database"
     )
-    parser.add_argument("--server", type=str, help="SQL Server hostname")
-    parser.add_argument("--database", type=str, help="SQL Database name")
-    parser.add_argument("--app-identity-name", type=str, help="Azure App Service identity name")
+    parser.add_argument("--server", type=str, required=True, help="SQL Server hostname")
+    parser.add_argument("--database", type=str, required=True, help="SQL Database name")
+    parser.add_argument(
+        "--app-identity-name", type=str, required=True, help="Azure App Service identity name"
+    )
 
     args = parser.parse_args()
 

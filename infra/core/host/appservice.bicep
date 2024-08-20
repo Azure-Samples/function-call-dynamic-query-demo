@@ -49,6 +49,10 @@ var coreConfig = {
   linuxFxVersion: runtimeNameAndVersion
   alwaysOn: alwaysOn
   ftpsState: ftpsState
+  http20Enabled: true
+  httpLoggingEnabled: true
+  scmType: 'GitHubAction'
+  numberOfWorkers: 1
   appCommandLine: appCommandLine
   minTlsVersion: '1.2'
   use32BitWorkerProcess: use32BitWorkerProcess
