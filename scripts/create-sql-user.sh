@@ -33,7 +33,7 @@ echo "Python environment loaded successfully."
 
 # Run the Python script to assign roles
 echo "Running the Python script to assign roles..."
-python3 ./app/setup_sql_azurerole.py --server $SQL_SERVER --database $SQL_DATABASE --app-identity-name $APP_IDENTITY_NAME
+python3 ./app/setup_sql_database_role.py --server $SQL_SERVER --database $SQL_DATABASE --app-identity-name $APP_IDENTITY_NAME
 if [ $? -ne 0 ]; then
     echo "Failed to run the Python script."
     exit 1
