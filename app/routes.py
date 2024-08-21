@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from .functions import execute_query
+from app.functions import execute_query
 
 router = APIRouter()
 

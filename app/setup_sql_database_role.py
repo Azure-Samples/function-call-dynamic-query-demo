@@ -1,7 +1,6 @@
 import argparse
 import logging
-
-# import struct
+import struct
 import pyodbc
 from azure.identity import DefaultAzureCredential
 

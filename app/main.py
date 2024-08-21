@@ -3,8 +3,8 @@ import json
 from fastapi import FastAPI, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
-from .functions import execute_query
-from .routes import router
+from app.functions import execute_query
+from app.routes import router
 import logging
 from pydantic import BaseModel
 
