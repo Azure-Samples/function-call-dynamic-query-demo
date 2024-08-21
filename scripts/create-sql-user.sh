@@ -21,6 +21,22 @@ echo "SQL_SERVER: $SQL_SERVER"
 echo "SQL_DATABASE: $SQL_DATABASE"
 echo "APP_IDENTITY_NAME: $APP_IDENTITY_NAME"
 
+
+
+###InstalL Oracle Driver######
+if ! [[ "18.04 20.04 22.04 23.04 24.04" == *"$(lsb_release -rs)"* ]];
+then
+    echo "Ubuntu $(lsb_release -rs) is not currently supported.";
+    exit;
+fi
+
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+
+curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+
+sudo apt-get update
+sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+
 # Load the Python environment (if using a virtual environment)
 echo "Loading Python environment..."
 . ./scripts/load_python_env.sh
