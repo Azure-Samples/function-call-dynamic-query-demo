@@ -144,6 +144,6 @@ output managedIdentityId string = managedIdentity.outputs.managedIdentityId
 output openAIResourceId string = openAIService.outputs.openAIResourceId
 output SQL_SERVER string = sqlDatabase.outputs.sqlHostName
 output SQL_DATABASE string = sqlDatabase.outputs.sqlDatabaseName
-output APP_SERVICE_NAME string = appService.outputs.SERVICE_WEB_NAME
+output AZURE_WEB_APP_NAME string = appService.outputs.SERVICE_WEB_NAME
 output ADMIN_USERNAME string = sqlDatabase.outputs.sqlDatabaseuser
 
