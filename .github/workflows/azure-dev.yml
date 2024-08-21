@@ -64,4 +64,4 @@ jobs:
           AZD_INITIAL_ENVIRONMENT_CONFIG: ${{ secrets.AZD_INITIAL_ENVIRONMENT_CONFIG }}
 
       - name: Deploy Application
-        run: azd deploy --no-prompt --debug
+        run: azd deploy --no-prompt

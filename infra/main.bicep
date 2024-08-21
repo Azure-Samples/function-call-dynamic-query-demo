@@ -57,7 +57,7 @@ module appService 'core/host/appservice.bicep' = {
     managedIdentityId: managedIdentity.outputs.managedIdentityId
     runtimeName: 'python'
     runtimeVersion: '3.10'
-    appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app'
+    appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app'
     scmDoBuildDuringDeployment: true
     // githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'
     // githubBranch: 'main'

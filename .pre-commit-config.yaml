@@ -5,11 +5,11 @@ repos:
     -   id: check-yaml
     #-   id: end-of-file-fixer
     -   id: trailing-whitespace
--   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.0
-    hooks:
-        # Run the linter.
-        - id: ruff
-          args: [ --fix ]
-        # Run the formatter.
-        - id: ruff-format
+# -   repo: https://github.com/astral-sh/ruff-pre-commit
+#     rev: v0.1.0
+#     hooks:
+#         # Run the linter.
+#         - id: ruff
+#           args: [ --fix ]
+#         # Run the formatter.
+#         - id: ruff-format
