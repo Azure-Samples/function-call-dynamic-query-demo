@@ -14,7 +14,9 @@ hooks:
             continueOnError: false
         posix:
             shell: sh
-            run: ./scripts/create-sql-user.sh
+            run: |
+                chmod +x ./scripts/create-sql-user.sh
+                ./scripts/create-sql-user.sh
             interactive: true
             continueOnError: false
 
