@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 from pydantic import BaseModel
+from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 import logging
 
 # handling imports in different enviorments
@@ -28,11 +29,20 @@ app = FastAPI()
 app.include_router(router)
 
 # Define the Azure OpenAI client
+token_provider = get_bearer_token_provider(
+    DefaultAzureCredential(), "https://cognitiveservices.azure.com/.default"
+)
 client = AzureOpenAI(
     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    api_version="2024-03-01-preview",
+    api_version=os.getenv("AZURE_OPENAI_VERSION"),
+    azure_ad_token_provider=token_provider,
 )
+
+# client = AzureOpenAI(
+#     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+#     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+#     api_version="2024-03-01-preview",
+# )
 
 # Schema information for the tables
 schema_info = {

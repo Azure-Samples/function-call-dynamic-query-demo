@@ -66,7 +66,7 @@ module appService 'core/host/appservice.bicep' = {
     managedIdentityId: managedIdentity.outputs.managedIdentityId
     runtimeName: 'python'
     runtimeVersion: '3.10'
-    appCommandLine: 'gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app'
+    appCommandLine: 'entrypoint.sh'
     scmDoBuildDuringDeployment: true
     // githubRepo:'https://github.com/abdulzedan/function-call-dynamic-query-demo.git'
     // githubBranch: 'main'
@@ -76,7 +76,7 @@ module appService 'core/host/appservice.bicep' = {
       SQL_USERNAME: sqlDatabase.outputs.sqlDatabaseuser
       SQL_PASSWORD: administratorPassword
       AZURE_SQL_CONNECTIONSTRING: sqlDatabase.outputs.connectionString
-      AZURE_CLIENT_ID: managedIdentity.outputs.managedIdentityPrincipalId
+      AZURE_CLIENT_ID: managedIdentity.outputs.managedIdentityClientId
       AZURE_OPENAI_ENDPOINT: openAIService.outputs.openAIEndpoint
       AZURE_OPENAI_VERSION: chatgpt4oDeploymentVersion
       AZURE_OPENAI_CHAT_DEPLOYMENT: chatgpt4oDeploymentName

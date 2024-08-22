@@ -34,7 +34,10 @@ def handler(signum, frame):
 # Function to get a database connection via pyodbc and entra ID
 def get_conn():
     try:
-        credential = DefaultAzureCredential(exclude_interactive_browser_credential=False)
+        credential = DefaultAzureCredential(
+            exclude_interactive_browser_credential=False,
+            managed_identity_client_id=os.getenv("AZURE_CLIENT_ID"),
+        )
         token_bytes = credential.get_token("https://database.windows.net/.default").token.encode(
             "UTF-16-LE"
         )
