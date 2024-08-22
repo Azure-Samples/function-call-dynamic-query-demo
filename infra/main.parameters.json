@@ -25,9 +25,15 @@
       },
       "appServiceSkuName": {
         "value": "B1"
+      },
+      "aad_admin_name": {
+        "value": "abdulzedan_microsoft.com#EXT#@fdpo.onmicrosoft.com"
+      },
+      "aad_admin_password": {
+        "value": "yourStrongPassword@123"
+      },
+      "aad_admin_objectid": {
+        "value": "a67b0023-ea1c-4000-908a-d448178d3582"
       }
     }
   }
-
-
-

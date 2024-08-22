@@ -7,6 +7,19 @@ param administratorPassword string
 // param administratorAADId string
 param tags object = {}
 
+// parameters for aad
+param aad_admin_type string = 'User'
+param aad_only_auth bool = false
+@description('The name of the Azure AD admin for the SQL server.')
+param aad_admin_name string
+@description('The Tenant ID of the Azure Active Directory')
+param aad_admin_tenantid string = subscription().tenantId
+@description('The Object ID of the Azure AD admin.')
+param aad_admin_objectid string
+
+// referenced properties:
+// Reference Properties
+
 resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
   name: serverName
   location: location
@@ -16,14 +29,16 @@ resource sqlServer 'Microsoft.Sql/servers@2023-08-01-preview' = {
     version: '12.0'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
-    // administrators: {
-    //   administratorType: 'ActiveDirectory'
-    //   principalType: 'User'
-    //   azureADOnlyAuthentication: false
-    //   login: 'abdulzedan'
-    //   tenantId: subscription().tenantId
-    //   // sid: administratorAADId
-    // }
+    administrators: {
+      administratorType: 'ActiveDirectory'
+      login: aad_admin_name
+      sid: aad_admin_objectid
+      tenantId: aad_admin_tenantid
+      principalType: aad_admin_type
+      azureADOnlyAuthentication: aad_only_auth
+
+      // sid: administratorAADId
+    }
   }
   tags: tags
 }

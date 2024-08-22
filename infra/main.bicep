@@ -13,6 +13,15 @@ param tags object = {}
 param administratorLogin string
 @secure()
 param administratorPassword string
+// parameters for aad
+param aad_admin_type string = 'User'
+param aad_only_auth bool = false
+@description('The name of the Azure AD admin for the SQL server.')
+param aad_admin_name string
+@description('The Tenant ID of the Azure Active Directory')
+param aad_admin_tenantid string = subscription().tenantId
+@description('The Object ID of the Azure AD admin.')
+param aad_admin_objectid string
 
 
 // app service
@@ -82,6 +91,11 @@ module sqlDatabase 'core/database/sql-database.bicep' = {
   name: 'sqlDatabaseDeployment'
   scope: resourceGroup
   params: {
+    aad_admin_name: aad_admin_name
+    aad_admin_objectid: aad_admin_objectid
+    aad_admin_tenantid: aad_admin_tenantid
+    aad_only_auth: aad_only_auth
+    aad_admin_type: aad_admin_type
     location: location
     serverName: '${name}-sql-server'
     databaseName: '${name}-database'
@@ -146,4 +160,4 @@ output SQL_SERVER string = sqlDatabase.outputs.sqlHostName
 output SQL_DATABASE string = sqlDatabase.outputs.sqlDatabaseName
 output AZURE_WEB_APP_NAME string = appService.outputs.SERVICE_WEB_NAME
 output ADMIN_USERNAME string = sqlDatabase.outputs.sqlDatabaseuser
-
+output MANAGED_IDENTITY_NAME string = managedIdentity.outputs.managedIdentityName

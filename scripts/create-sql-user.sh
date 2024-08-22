@@ -9,7 +9,7 @@ if [ $? -ne 0 ]; then
 fi
 
 SQL_DATABASE=$(azd env get-value SQL_DATABASE)
-APP_IDENTITY_NAME=$(azd env get-value AZURE_WEB_APP_NAME)
+APP_IDENTITY_NAME=$(azd env get-value MANAGED_IDENTITY_NAME)
 
 if [ -z "$SQL_SERVER" ] || [ -z "$SQL_DATABASE" ] || [ -z "$APP_IDENTITY_NAME" ]; then
     echo "Can't find SQL_SERVER, SQL_DATABASE, or AZURE_WEB_APP_NAME environment variables. Make sure you run azd up first."
