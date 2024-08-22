@@ -1,0 +1,19 @@
+[project]
+name = "fastapi_app"
+version = "1.0.0"
+description = "FastAPI application with Azure integration"
+dependencies = [
+"azure-identity==1.17.1",
+"fastapi==0.112.1",
+"openai==1.41.0",
+"pydantic==2.8.2",
+"pyodbc==5.1.0",
+"python-dotenv==1.0.1",
+"SQLAlchemy==2.0.31",
+"sqlparse==0.5.1",
+"uvicorn==0.30.1"
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"

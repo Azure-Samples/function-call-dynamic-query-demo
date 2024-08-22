@@ -3,10 +3,13 @@ import json
 from fastapi import FastAPI, HTTPException
 from openai import AzureOpenAI
 from dotenv import load_dotenv
-from app.functions import execute_query
-from app.routes import router
-import logging
 from pydantic import BaseModel
+import logging
+
+# handling imports in different enviorments
+# imports the paths
+from fastapi_app.functions import execute_query
+from fastapi_app.routes import router
 
 
 class AskRequest(BaseModel):
@@ -71,6 +74,7 @@ schema_info = {
     },
 }
 
+
 # Root endpoint for testing
 @app.get("/")
 async def root():
@@ -86,7 +90,7 @@ async def ask_openai(request: AskRequest):
             raise HTTPException(status_code=400, detail="Message is required")
 
         # Enhanced prompt with schema details
-        schema_prompt = f"""
+        schema_prompt = """
         You are a Azure SQL database expert. Only use the tables and columns listed below:
         Tables:
         - SalesLT.Customer:(Customers of the store.)

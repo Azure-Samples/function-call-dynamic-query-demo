@@ -48,7 +48,7 @@ def assign_role_for_webapp(conn, app_identity_name):
 
         logger.info(f"Granting permissions to {app_identity_name}")
         cursor.execute(f"ALTER ROLE db_datareader ADD MEMBER [{app_identity_name}]")
-        cursor.execute(f"ALTER ROLE db_datawriter ADD MEMBER [{app_identity_name}]")
+        # cursor.execute(f"ALTER ROLE db_datawriter ADD MEMBER [{app_identity_name}]")
 
         conn.commit()
         cursor.close()
