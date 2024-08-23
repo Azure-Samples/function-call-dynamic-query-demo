@@ -137,7 +137,7 @@ async def ask_openai(request: AskRequest):
         ]
 
         response = client.chat.completions.create(
-            model="gpt-4",
+            model=os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT"),
             messages=messages,
             tools=tools,
             tool_choice="auto",

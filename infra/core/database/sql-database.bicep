@@ -77,5 +77,5 @@ output sqlResourceId string = sqlServer.id
 output sqlResourcename string = sqlServer.name
 output sqlHostName string = sqlServer.properties.fullyQualifiedDomainName
 output sqlDatabaseName string = sqlDatabase.name
-output connectionString string = 'Driver={ODBC Driver 18 for SQL Server};Server=tcp:${sqlServer.properties.fullyQualifiedDomainName}.database.windows.net,1433;Database=${sqlDatabase.name};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30'
+output connectionString string = 'Driver={ODBC Driver 18 for SQL Server};Server=tcp:${sqlServer.properties.fullyQualifiedDomainName},1433;Database=${sqlDatabase.name};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30'
 output sqlDatabaseuser string = administratorLogin

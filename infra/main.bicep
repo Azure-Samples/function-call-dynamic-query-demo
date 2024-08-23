@@ -28,11 +28,6 @@ param aad_admin_objectid string
 param appServicePlanName string
 param appServiceSkuName string
 
-// openai
-param chatgpt4oDeploymentVersion string = '2024-05-13'
-param chatgpt4oDeploymentName string = 'gpt-4o'
-
-
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${name}-rg'
@@ -78,8 +73,9 @@ module appService 'core/host/appservice.bicep' = {
       AZURE_SQL_CONNECTIONSTRING: sqlDatabase.outputs.connectionString
       AZURE_CLIENT_ID: managedIdentity.outputs.managedIdentityClientId
       AZURE_OPENAI_ENDPOINT: openAIService.outputs.openAIEndpoint
-      AZURE_OPENAI_VERSION: chatgpt4oDeploymentVersion
-      AZURE_OPENAI_CHAT_DEPLOYMENT: chatgpt4oDeploymentName
+      AZURE_OPENAI_VERSION: openAIService.outputs.openAIAPIversion
+      AZURE_OPENA_MODEL_VERSION: openAIService.outputs.openAIDeploymentVersion
+      AZURE_OPENAI_CHAT_DEPLOYMENT: openAIService.outputs.openAIDeploymentName
     }
   }
 }

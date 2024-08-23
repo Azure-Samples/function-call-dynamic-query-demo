@@ -5,10 +5,14 @@ import struct
 import logging
 import threading
 from decimal import Decimal
+from uuid import UUID
+from datetime import datetime
+import base64
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 import sqlparse
 from sqlparse.tokens import DML
+
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -55,11 +59,18 @@ def get_conn():
         raise
 
 
-# Function to convert decimal.Decimal to float
+# Function to convert decimal.Decimal to float & other data types
 def convert_decimal(obj):
     if isinstance(obj, Decimal):
         return float(obj)
-    raise TypeError
+    elif isinstance(obj, UUID):
+        return str(obj)
+    elif isinstance(obj, datetime):
+        return obj.isoformat()
+    elif isinstance(obj, bytes):  # Handling BLOB as base64 encoded string
+        return base64.b64encode(obj).decode("utf-8")
+    else:
+        raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
 
 
 # Function to check if the SQL query is read-only
