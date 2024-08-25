@@ -1,6 +1,6 @@
 # Text to Query for Azure SQL using OpenAI Function Call
 
-This project creates a backend that can use OpenAI chat models that support the function calling ability to answer questions about your Azure SQL Database.
+This project creates a backend that can use OpenAI chat models that support the [function calling](https://platform.openai.com/docs/guides/function-calling) ability to answer questions about your Azure SQL Database.
 It does this by first identifying if the user query is asking about an internal data source (in this case, it is Azure SQL), if it does, then the application generates a SQL query from the users prompt, connects to the database via user assigned manage identity, executes that query, and relates it back to the user in JSON Format. The flow of this application can be seen using the below diagram.
 
 ![Diagramn of application flow](docs/screenshot_chat.png)
@@ -15,7 +15,7 @@ This project is designed for deployment via the Azure Developer CLI, hosting the
 
 ## Getting Started
 
-You may deploy using Github Actions or through the azd up command.
+You may deploy using Github Actions or through the `azd up` command.
 
 ### Github Codespaces
 
