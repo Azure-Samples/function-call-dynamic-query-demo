@@ -66,12 +66,22 @@ resource sqlDatabase 'Microsoft.Sql/servers/databases@2023-08-01-preview' = {
 
 resource firewallRule 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
   parent: sqlServer
-  name: 'AllowAllWindowsAzureIps'
+  name: 'AllowAlLinternalAzureIps'
   properties: {
     endIpAddress: '0.0.0.0'
     startIpAddress: '0.0.0.0'
   }
 }
+
+resource firewallRule_Azure 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer
+  name: 'AllowAllIps'
+  properties: {
+    endIpAddress:'255.255.255.255'
+    startIpAddress:  '0.0.0.0'
+  }
+}
+
 
 output sqlResourceId string = sqlServer.id
 output sqlResourcename string = sqlServer.name
