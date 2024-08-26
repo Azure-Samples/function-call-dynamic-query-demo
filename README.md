@@ -73,9 +73,9 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
     * administrator_login: login name of the administrator of the Azure SQL Database.
     * administratorPassword: password name of the administrator of the Azure SQL Database.
     * appServicePlanName: The Plan Name that will be created for the Azure App Service resource
-    * [appServiceSkuName](https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans)
-    * aad_admin_name: Principal name of the external administrator (UPN)
-    * aad_admin_objectid: PrincipalID of the external administrator (Also known as the "sid" or "ObjectID" of the user)
+    * [appServiceSkuName](https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans) the name of he App Service SKU that will be used to provision the Azure App Service resource.
+    * aad_admin_name: Principal name of the external administrator (UPN).
+    * aad_admin_objectid: PrincipalID of the external administrator (Also known as the "sid" or "ObjectID" of the user).
 
 4. Provision the resources and deploy the code:
 
