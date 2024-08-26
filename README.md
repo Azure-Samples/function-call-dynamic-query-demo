@@ -66,8 +66,6 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 
 3. Configure the main.parameters.json file found in infra/main.parameters.json
 
-    * name: name of the environment
-    * location: location of deployment
     * administrator_login: login name of the administrator of the Azure SQL Database.
     * administratorPassword: password name of the administrator of the Azure SQL Database.
     * appServicePlanName: The Plan Name that will be created for the Azure App Service resource
@@ -87,8 +85,6 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 
 Pricing may vary per region and usage. Exact costs cannot be estimated.
 You may try the [Azure pricing calculator](https://azure.microsoft.com/pricing/calculator/) for the resources below:
-
-Azure Web Apps: costs are based on the CPU, memory and storage resources you use. You can set the appServiceSkuName parameter in the main.parameters.json file to the sku of your choosing. Additional features like custom domains, SSL certificates and backups may incur additional charges.
 
 * Azure Web Apps: costs are based on the CPU, memory and storage resources you use. You can set the appServiceSkuName parameter in the main.parameters.json file to the sku of your choosing. Additional features like custom domains, SSL certificates and backups may incur additional charges.[Pricing](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/)
 * Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
