@@ -15,9 +15,7 @@ This project is designed for deployment via the Azure Developer CLI, hosting the
 
 ## Getting Started
 
-You may deploy using Github Actions or through the `azd up` command.
-
-### Github Actions
+You may deploy using the `azd up` command.
 
 
 ### Local Enviornment
