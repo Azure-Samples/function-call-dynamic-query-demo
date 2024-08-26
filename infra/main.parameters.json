@@ -15,22 +15,22 @@
         }
       },
       "administratorLogin": {
-        "value": "SOME_ADMIN"
+        "value": "NAME TO ACCESS DATABASE"
       },
       "administratorPassword": {
-        "value": "SOME_PASSWORDS"
+        "value": "SOME-STRONG-PASSWORD"
       },
       "appServicePlanName": {
-        "value": "IF YOU HAVE AN EXISTING APPSERVICE PLAN NAME, INPUT HERE, IF NOT, WRITE THE APPSERVICE NAME YOU WANT TO BE CREATED"
+        "value": "IF YOU HAVE AN EXISTING APP SERVICE PLAN NAME, PLEASE PUT IT HERE, OTHERWISE, CREATE A NAME"
       },
       "appServiceSkuName": {
         "value": "B1"
       },
       "aad_admin_name": {
-        "value": "YOUR PRINCIPAL LOGIN ID"
+        "value": "YOUR PRINCIPAL LODIN NAME"
       },
       "aad_admin_objectid": {
-        "value": "00000000-0000-00000-0000-000000000000"
+        "value": "00000000-0000-0000-0000-000000000000"
       }
     }
   }
