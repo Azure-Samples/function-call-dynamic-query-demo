@@ -3,7 +3,7 @@ param location string
 param tags object = {}
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2021-09-30-preview' = {
-  name: '${name}-identity'
+  name: name
   location: location
   tags: tags
 }

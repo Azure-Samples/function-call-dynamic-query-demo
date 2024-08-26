@@ -15,25 +15,22 @@
         }
       },
       "administratorLogin": {
-        "value": "ZEDAN_TESTING"
+        "value": "SOME_ADMIN"
       },
       "administratorPassword": {
-        "value": "yourStrongPassword@123"
+        "value": "SOME_PASSWORDS"
       },
       "appServicePlanName": {
-        "value": "myapp-asp-sd"
+        "value": "IF YOU HAVE AN EXISTING APPSERVICE PLAN NAME, INPUT HERE, IF NOT, WRITE THE APPSERVICE NAME YOU WANT TO BE CREATED"
       },
       "appServiceSkuName": {
         "value": "B1"
       },
       "aad_admin_name": {
-        "value": "abdulzedan_microsoft.com#EXT#@fdpo.onmicrosoft.com"
-      },
-      "aad_admin_password": {
-        "value": "yourStrongPassword@123"
+        "value": "YOUR PRINCIPAL LOGIN ID"
       },
       "aad_admin_objectid": {
-        "value": "a67b0023-ea1c-4000-908a-d448178d3582"
+        "value": "00000000-0000-00000-0000-000000000000"
       }
     }
   }

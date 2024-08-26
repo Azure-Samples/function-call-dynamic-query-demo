@@ -29,6 +29,10 @@ param appServicePlanName string
 param appServiceSkuName string
 
 
+var resourceToken = toLower(uniqueString(subscription().id, name, location))
+var prefix = '${name}-${resourceToken}'
+
+
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: '${name}-rg'
   location: location
@@ -54,7 +58,7 @@ module appService 'core/host/appservice.bicep' = {
   name: 'appServiceDeployment'
   scope: resourceGroup
   params: {
-    name: '${name}-webapp'
+    name: '${prefix}-webapp'
     location: location
     tags: union(tags, { 'azd-service-name': 'appdev' })
     appServicePlanId: appServicePlan.outputs.id
@@ -93,8 +97,8 @@ module sqlDatabase 'core/database/sql-database.bicep' = {
     aad_only_auth: aad_only_auth
     aad_admin_type: aad_admin_type
     location: location
-    serverName: '${name}-sql-server'
-    databaseName: '${name}-database'
+    serverName: '${prefix}-sql-server'
+    databaseName: '${prefix}-database'
     administratorLogin: administratorLogin
     administratorPassword: administratorPassword
     // administratorAADId: 'aadId'
@@ -105,7 +109,7 @@ module managedIdentity 'core/identity/user-mi.bicep' = {
   name: 'managedIdentityDeployment'
   scope: resourceGroup
   params: {
-    name: name
+    name: '${prefix}-identity'
     location: location
     tags: tags
   }
@@ -115,7 +119,7 @@ module openAIService 'core/ai/openai.bicep' = {
   name: 'openAIDeployment'
   scope: resourceGroup
   params: {
-    name: name
+    name: '${prefix}-openai'
     location: location
 
   }
