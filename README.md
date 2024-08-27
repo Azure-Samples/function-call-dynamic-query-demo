@@ -27,15 +27,10 @@ You may deploy using the `azd up` command.
     * [Git](https://git-scm.com/downloads)
     * [ODBC Driver 18](https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver16)
 
-
-2. Download the project code:
-
-    ```shell
-    azd init -t function-call-dynamic-query-demo
-    ```
-
+2. Clone the repository to your local machine
 
 3. Open the project folder
+
 4. Install required Python packages and backend application:
 
     ```shell
@@ -43,7 +38,6 @@ You may deploy using the `azd up` command.
     pip install -r requirements.txt
     pip install -e app
     ```
-
 5. Continue with the [deployment steps](#deployment)
 
 Once you've opened the project in [Codespaces](#github-codespaces), [Dev Containers](#vs-code-dev-containers), or [locally](#local-environment), you can deploy it to Azure.
