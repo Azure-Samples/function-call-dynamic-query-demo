@@ -7,16 +7,16 @@ It does this by first identifying if the user query is asking about an internal 
 
 ## Features
 
-This project is designed for deployment via the Azure Developer CLI, hosting the backend on Azure Web Apps, the database being Azure SQL, and the models that support function calling in Azure OpenAI.
+This project is designed for deployment via the Azure Developer CLI, hosting the backend on Azure Web Apps, the database being Azure SQL, and the models that support function calling in Azure OpenAI. For this demo, the database leverges the ["AdventureWorks"](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms) Sample Database. 
 
 * Conversion of user queries into Azure SQL that can be executed
 * Generate results from your internal Azure SQL database based on user queries.
 * Enforce only read queries to the database
+* Ask questions like "What is the most expensive product we have?", "What is the cost associated with product HL Road Frame - Black, 58" & more! 
 
 ## Getting Started
 
 You may deploy using the `azd up` command.
-
 
 ### Local Enviornment
 
