@@ -40,6 +40,7 @@ You may deploy using the `azd up` command.
     pip install -r requirements.txt
     pip install -e app
     ```
+
 5. Continue with the [deployment steps](#deployment)
 
 Once you've opened the project in [Codespaces](#github-codespaces), [Dev Containers](#vs-code-dev-containers), or [locally](#local-environment), you can deploy it to Azure.
@@ -60,22 +61,42 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 
     This will create a folder under `.azure/` in your project to store the configuration for this deployment. You may have multiple azd environments if desired.
 
-3. Configure the main.parameters.json file found in infra/main.parameters.json
+    You will be asked to select the location of which the resource will be provisioned. You will have the option between 3 options due to model availability.
 
-    * administrator_login: login name of the administrator of the Azure SQL Database.
-    * administratorPassword: password name of the administrator of the Azure SQL Database.
-    * appServicePlanName: The Plan Name that will be created for the Azure App Service resource
-    * [appServiceSkuName](https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans) the name of he App Service SKU that will be used to provision the Azure App Service resource.
-    * aad_admin_name: Principal name of the external administrator (UPN).
-    * aad_admin_objectid: PrincipalID of the external administrator (Also known as the "sid" or "ObjectID" of the user).
+3. Configure your environment variables that will be used for deployment:
 
-4. Provision the resources and deploy the code:
+> [!IMPORTANT]
+> Please note that SQL Auth cannot be turned off, an admin name and password must be given as part of the database creation process.
+
+ * administrator_login: login name of the administrator for the Azure SQL Database.
 
     ```shell
-    azd up
+    azd env set AZURE_ADMIN_LOGIN someadminname
     ```
 
-    You will be asked to select the location of which the resource will be provisioned. You will have the option between 3 options due to model availability.
+ * administratorPassword: password name of the administrator for the Azure SQL Database.
+
+    ```shell
+    azd env set AZURE_ADMIN_PASSWORD someadminpassword
+    ```
+
+ * appServicePlanName: The plan name that will be created for the Azure App Service resource
+
+    ```shell
+    azd env set AZURE_APP_SERVICE_PLAN someappserviceplan
+    ```
+
+ * [appServiceSkuName](https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans) the name of he App Service SKU that will be used to provision the Azure App Service resource.
+
+    ```shell
+    azd env set AZURE_APP_SERVICE_SKU someskuname
+    ```
+
+ * aad_admin_name: Principal name of the external administrator (UPN). If you need to know what this value is, please run the script: [fetch-principal-info.sh](../scripts/fetch-principal-info.sh) or [fetch-principal-info.ps1](../scripts/fetch-principal-info.ps1)
+
+    ```shell
+    azd env set AZURE_PRINCIPAL_NAME yourprincipalname
+    ```
 
 ## Costs
 

@@ -15,22 +15,22 @@
       }
     },
     "administratorLogin": {
-      "value": "NAME TO ACCESS DATABASE"
+      "value": "${AZURE_ADMIN_LOGIN}"
     },
     "administratorPassword": {
-      "value": "SOME-STRONG-PASSWORD"
+      "value": "${AZURE_ADMIN_PASSWORD}"
     },
     "appServicePlanName": {
-      "value": "IF YOU HAVE AN EXISTING APP SERVICE PLAN NAME, PLEASE PUT IT HERE, OTHERWISE, CREATE A NAME"
+      "value":  "${AZURE_APP_SERVICE_PLAN}"
     },
     "appServiceSkuName": {
-      "value": "B1"
+      "value":  "${AZURE_APP_SERVICE_SKU}"
     },
     "aad_admin_name": {
-      "value": "YOUR PRINCIPAL LOGIN NAME"
+      "value":  "${AZURE_PRINCIPAL_NAME}"
     },
     "aad_admin_objectid": {
-      "value": "00000000-0000-0000-0000-000000000000"
+      "value":  "${AZURE_PRINCIPAL_ID}"
     }
   }
 }
