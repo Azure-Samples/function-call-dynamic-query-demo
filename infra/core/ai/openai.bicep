@@ -21,6 +21,10 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   }
   resource gpt4o 'deployments' = {
     name: openaideploymentname
+    sku: {
+      name: 'Standard'
+      capacity: 30
+    }
     properties: {
       model: {
         format: 'OpenAI'
