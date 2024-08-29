@@ -92,7 +92,7 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
     azd env set AZURE_APP_SERVICE_SKU someskuname
     ```
 
- * aad_admin_name: Principal name of the external administrator (UPN). If you need to know what this value is, please run the script: [fetch-principal-info.sh](../scripts/fetch-principal-info.sh) or [fetch-principal-info.ps1](../scripts/fetch-principal-info.ps1)
+ * aad_admin_name: Principal name of the external administrator (UPN). If you need to know what this value is, please run the script: [fetch-principal-info.sh](scripts/fetch-principal-info.sh) or [fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
 
     ```shell
     azd env set AZURE_PRINCIPAL_NAME yourprincipalname
