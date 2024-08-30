@@ -12,8 +12,16 @@ This project is designed for deployment via the Azure Developer CLI, hosting the
 * Conversion of user queries into Azure SQL that can be executed
 * Generate results from your internal Azure SQL database based on user queries.
 * Enforce only read queries to the database
-* Ask questions like "What is the most expensive product we have?", "What is the cost associated with product HL Road Frame - Black, 58" & more!
+* Ask questions like "What are the top 3 products we have?", "What is the cost associated with product HL Road Frame - Black, 58?" , "How many red products do we have?" & more!
 
+## Schema Detection & Understanding
+
+This project leverages GPT-4o to generate the SQL query for the database. The model has contextual understanding of the `SalesLT.Customer` & `SalesLT.Product` tables. This is done by injecting the schema information of these tables as part of the prompt.
+
+To have more understanding of the tables contents. Please login to your Azure SQL Database, and look through these tables.
+
+> [!NOTE]
+> Further developments of this repository will include automatic schema detections for accessible tables in the Azure SQL Database
 
 ## Getting Started
 
@@ -98,6 +106,29 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
     azd env set AZURE_PRINCIPAL_NAME yourprincipalname
     ```
 
+
+## Accessing the API documentation
+
+After all the resources have been provisioned and the deployment is complete. Head to the endpoint the App Service created.
+You will be directed to a root entry point for the backend. To test the APIs, please add `docs` to the end of the url.
+
+> [!NOTE]
+> For example, if your endpoint is: `https://testing-function-call-demo-example-webapp.azurewebsites.net`
+> To test the endpoint, you must add `docs` at the end of this url, so the new url would be:
+> `https://testing-function-call-demo-example-webapp.azurewebsites.net/docs`
+
+## Getting Started
+
+- **Step 1:** Access the API documentation at `/docs`.
+- **Step 2:** Use the Swagger UI to explore and test the available APIs.
+
+You will have the ability to test 2 APIs in the Swagger UI.
+
+1) `execute_query` API which will take as input, a SQL command to execute on the Azure SQL Database.
+2) `ask` API which will take a user message, convert it to a SQL Command using OpenAI, and execute the query against the database which will return the result in JSON format.
+
+
+
 ## Costs
 
 Pricing may vary per region and usage. Exact costs cannot be estimated.
@@ -107,6 +138,7 @@ You may try the [Azure pricing calculator](https://azure.microsoft.com/pricing/c
 * Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 * Azure SQL: This project leverage the “General Purpose - Serverless: Gen5, 1 vCore” sku with the adventureworks database. The cost depends on the compute costs and storage costs associated with the project. [Pricing](https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/)
 * Azure Monitor: Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
+
 
 
 ## Security guidelines
