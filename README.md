@@ -25,10 +25,7 @@ To have more understanding of the tables contents. Please login to your Azure SQ
 
 ## Getting Started
 
-You may deploy using the `azd up` command.
-
-
-### Local Enviornment
+### Local Environment
 
 1. Make sure the following tools are installed:
 
@@ -45,11 +42,12 @@ You may deploy using the `azd up` command.
 
     ```shell
     pip install -r requirements-dev.txt
-    pip install -r requirements.txt
     pip install -e app
     ```
 
-5. Continue with the [deployment steps](#deployment)
+5. Continue with the [deployment steps](#deployment) below.
+
+## Deployment
 
 Once you've opened the project in [Codespaces](#github-codespaces), [Dev Containers](#vs-code-dev-containers), or [locally](#local-environment), you can deploy it to Azure.
 
@@ -76,35 +74,24 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 > [!IMPORTANT]
 > Please note that SQL Auth cannot be turned off, an admin name and password must be given as part of the database creation process.
 
+ * aad_admin_name: Principal name of the external administrator (UPN). If you need to know what this value is, please login with the Azure CLI and run the script: [fetch-principal-info.sh](./scripts/fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
+
+    ```shell
+    azd env set AZURE_PRINCIPAL_NAME yourprincipalname
+    ```
+
  * administrator_login: login name of the administrator for the Azure SQL Database.
 
     ```shell
     azd env set AZURE_ADMIN_LOGIN someadminname
     ```
 
- * administratorPassword: password name of the administrator for the Azure SQL Database.
+ * administratorPassword: password of the administrator for the Azure SQL Database. 
 
     ```shell
     azd env set AZURE_ADMIN_PASSWORD someadminpassword
     ```
 
- * appServicePlanName: The plan name that will be created for the Azure App Service resource
-
-    ```shell
-    azd env set AZURE_APP_SERVICE_PLAN someappserviceplan
-    ```
-
- * [appServiceSkuName](https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans) the name of he App Service SKU that will be used to provision the Azure App Service resource.
-
-    ```shell
-    azd env set AZURE_APP_SERVICE_SKU someskuname
-    ```
-
- * aad_admin_name: Principal name of the external administrator (UPN). If you need to know what this value is, please run the script: [fetch-principal-info.sh](scripts/fetch-principal-info.sh) or [fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
-
-    ```shell
-    azd env set AZURE_PRINCIPAL_NAME yourprincipalname
-    ```
 
 
 ## Accessing the API documentation
@@ -128,7 +115,6 @@ You will have the ability to test 2 APIs in the Swagger UI.
 2) `ask` API which will take a user message, convert it to a SQL Command using OpenAI, and execute the query against the database which will return the result in JSON format.
 
 
-
 ## Costs
 
 Pricing may vary per region and usage. Exact costs cannot be estimated.
@@ -138,7 +124,6 @@ You may try the [Azure pricing calculator](https://azure.microsoft.com/pricing/c
 * Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 * Azure SQL: This project leverage the “General Purpose - Serverless: Gen5, 1 vCore” sku with the adventureworks database. The cost depends on the compute costs and storage costs associated with the project. [Pricing](https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/)
 * Azure Monitor: Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
-
 
 
 ## Security guidelines

@@ -24,7 +24,7 @@
       "value":  "${AZURE_APP_SERVICE_PLAN}"
     },
     "appServiceSkuName": {
-      "value":  "${AZURE_APP_SERVICE_SKU}"
+      "value":  "${AZURE_APP_SERVICE_SKU=B1}"
     },
     "aad_admin_name": {
       "value":  "${AZURE_PRINCIPAL_NAME}"

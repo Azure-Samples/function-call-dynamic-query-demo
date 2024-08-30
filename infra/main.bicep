@@ -25,7 +25,7 @@ param aad_admin_objectid string
 
 
 // app service
-param appServicePlanName string
+param appServicePlanName string = ''
 param appServiceSkuName string
 
 
@@ -43,7 +43,7 @@ module appServicePlan 'core/host/appserviceplan.bicep' = {
   name: 'appserviceplan'
   scope: resourceGroup
   params: {
-    name: appServicePlanName
+    name: !empty(appServicePlanName) ? appServicePlanName : '${prefix}-plan'
     location: location
     tags: tags
     sku: {
@@ -121,7 +121,6 @@ module openAIService 'core/ai/openai.bicep' = {
   params: {
     name: '${prefix}-openai'
     location: location
-
   }
 }
 
