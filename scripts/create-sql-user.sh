@@ -21,21 +21,46 @@ echo "SQL_SERVER: $SQL_SERVER"
 echo "SQL_DATABASE: $SQL_DATABASE"
 echo "APP_IDENTITY_NAME: $APP_IDENTITY_NAME"
 
+# Detect the OS version and install the appropriate Oracle driver
+OS_ID=$(lsb_release -is)
+OS_VERSION=$(lsb_release -rs)
 
-
-###InstalL Oracle Driver######
-if ! [[ "18.04 20.04 22.04 23.04 24.04" == *"$(lsb_release -rs)"* ]];
-then
-    echo "Ubuntu $(lsb_release -rs) is not currently supported.";
-    exit;
+if [ "$OS_ID" == "Ubuntu" ]; then
+    echo "Detected OS: Ubuntu $OS_VERSION"
+    if ! [[ "18.04 20.04 22.04 23.04 24.04" == *"$OS_VERSION"* ]]; then
+        echo "Ubuntu $OS_VERSION is not currently supported."
+        exit 1
+    fi
+    curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+    curl https://packages.microsoft.com/config/ubuntu/$OS_VERSION/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    sudo apt-get update
+    sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+elif [ "$OS_ID" == "Debian" ]; then
+    echo "Detected OS: Debian $OS_VERSION"
+    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
+    if [ "$OS_VERSION" == "9" ]; then
+        curl https://packages.microsoft.com/config/debian/9/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    elif [ "$OS_VERSION" == "10" ]; then
+        curl https://packages.microsoft.com/config/debian/10/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    elif [ "$OS_VERSION" == "11" ]; then
+        curl https://packages.microsoft.com/config/debian/11/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    elif [ "$OS_VERSION" == "12" ]; then
+        curl https://packages.microsoft.com/config/debian/12/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    else
+        echo "Debian $OS_VERSION is not currently supported."
+        exit 1
+    fi
+    sudo apt-get update
+    sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+    sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18
+    echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+    source ~/.bashrc
+    sudo apt-get install -y unixodbc-dev
+    sudo apt-get install -y libgssapi-krb5-2
+else
+    echo "Unsupported OS: $OS_ID $OS_VERSION"
+    exit 1
 fi
-
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
-
-curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-
-sudo apt-get update
-sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
 
 # Load the Python environment (if using a virtual environment)
 echo "Loading Python environment..."
