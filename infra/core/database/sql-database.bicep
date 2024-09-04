@@ -9,7 +9,7 @@ param tags object = {}
 
 // parameters for aad
 param aad_admin_type string = 'User'
-param aad_only_auth bool = false
+param aad_only_auth bool = true
 @description('The name of the Azure AD admin for the SQL server.')
 param aad_admin_name string
 @description('The Tenant ID of the Azure Active Directory')

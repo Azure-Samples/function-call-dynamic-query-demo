@@ -22,43 +22,57 @@ echo "SQL_DATABASE: $SQL_DATABASE"
 echo "APP_IDENTITY_NAME: $APP_IDENTITY_NAME"
 
 # Detect the OS version and install the appropriate Oracle driver
-OS_ID=$(lsb_release -is)
-OS_VERSION=$(lsb_release -rs)
+OS=$(uname)
+if [ "$OS" == "Linux" ]; then
+    OS_ID=$(lsb_release -is 2>/dev/null)
+    OS_VERSION=$(lsb_release -rs 2>/dev/null)
 
-if [ "$OS_ID" == "Ubuntu" ]; then
-    echo "Detected OS: Ubuntu $OS_VERSION"
-    if ! [[ "18.04 20.04 22.04 23.04 24.04" == *"$OS_VERSION"* ]]; then
-        echo "Ubuntu $OS_VERSION is not currently supported."
-        exit 1
-    fi
-    curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
-    curl https://packages.microsoft.com/config/ubuntu/$OS_VERSION/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-    sudo apt-get update
-    sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
-elif [ "$OS_ID" == "Debian" ]; then
-    echo "Detected OS: Debian $OS_VERSION"
-    curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
-    if [ "$OS_VERSION" == "9" ]; then
-        curl https://packages.microsoft.com/config/debian/9/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-    elif [ "$OS_VERSION" == "10" ]; then
-        curl https://packages.microsoft.com/config/debian/10/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-    elif [ "$OS_VERSION" == "11" ]; then
-        curl https://packages.microsoft.com/config/debian/11/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-    elif [ "$OS_VERSION" == "12" ]; then
-        curl https://packages.microsoft.com/config/debian/12/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+    if [ "$OS_ID" == "Ubuntu" ]; then
+        echo "Detected OS: Ubuntu $OS_VERSION"
+        if ! [[ "18.04 20.04 22.04 23.04 24.04" == *"$OS_VERSION"* ]]; then
+            echo "Ubuntu $OS_VERSION is not currently supported."
+            exit 1
+        fi
+        curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+        curl https://packages.microsoft.com/config/ubuntu/$OS_VERSION/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+        sudo apt-get update
+        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+    elif [ "$OS_ID" == "Debian" ]; then
+        echo "Detected OS: Debian $OS_VERSION"
+        curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
+        if [ "$OS_VERSION" == "9" ]; then
+            curl https://packages.microsoft.com/config/debian/9/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+        elif [ "$OS_VERSION" == "10" ]; then
+            curl https://packages.microsoft.com/config/debian/10/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+        elif [ "$OS_VERSION" == "11" ]; then
+            curl https://packages.microsoft.com/config/debian/11/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+        elif [ "$OS_VERSION" == "12" ]; then
+            curl https://packages.microsoft.com/config/debian/12/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+        else
+            echo "Debian $OS_VERSION is not currently supported."
+            exit 1
+        fi
+        sudo apt-get update
+        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
+        sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18
+        echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+        source ~/.bashrc
+        sudo apt-get install -y unixodbc-dev
+        sudo apt-get install -y libgssapi-krb5-2
     else
-        echo "Debian $OS_VERSION is not currently supported."
+        echo "Unsupported Linux distribution."
         exit 1
     fi
-    sudo apt-get update
-    sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
-    sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18
-    echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
-    source ~/.bashrc
-    sudo apt-get install -y unixodbc-dev
-    sudo apt-get install -y libgssapi-krb5-2
+elif [ "$OS" == "Darwin" ]; then
+    echo "Detected OS: macOS"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
+    brew update
+    HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18
+    echo 'export PATH="/usr/local/opt/msodbcsql18/bin:/usr/local/opt/mssql-tools18/bin:$PATH"' >> ~/.zshrc
+    source ~/.zshrc
 else
-    echo "Unsupported OS: $OS_ID $OS_VERSION"
+    echo "Unsupported OS: $OS"
     exit 1
 fi
 
