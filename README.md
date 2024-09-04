@@ -72,7 +72,7 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 3. Configure your environment variables that will be used for deployment:
 
 > [!IMPORTANT]
-> Please note that SQL Auth cannot be turned off, an admin name and password must be given as part of the database creation process.
+> Please note that SQL Auth will be turned off. However, an admin name and password must be given as part of the database creation process.
 
  * aad_admin_name: Principal name of the external administrator (UPN). If you need to know what this value is, please login with the Azure CLI and run the script: [fetch-principal-info.sh](./scripts/fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
 
@@ -86,7 +86,7 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
     azd env set AZURE_ADMIN_LOGIN someadminname
     ```
 
- * administratorPassword: password of the administrator for the Azure SQL Database. 
+ * administratorPassword: password of the administrator for the Azure SQL Database.
 
     ```shell
     azd env set AZURE_ADMIN_PASSWORD someadminpassword
