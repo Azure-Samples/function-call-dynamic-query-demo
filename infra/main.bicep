@@ -15,7 +15,7 @@ param administratorLogin string
 param administratorPassword string
 // parameters for aad
 param aad_admin_type string = 'User'
-param aad_only_auth bool = true
+param aad_only_auth bool = false
 @description('The name of the Azure AD admin for the SQL server.')
 param aad_admin_name string
 @description('The Tenant ID of the Azure Active Directory')
