@@ -74,7 +74,7 @@ Once you've opened the project, you can deploy it to Azure.
     > [!IMPORTANT]
     > This project code uses passwordless authentication with the Azure SQL server, but it doesn't currently turn off SQL password auth entirely, due to an issue with Bicep-based deployments. The username is set to a unique string, and the password is set to an auto-generated value. Once deployed, you can disable SQL password auth via the Azure portal.
 
-    For the passwordless authentication to be properly set up, you must set the principal name of the external administrator (UPN). If you need > help finding this value, please login with the Azure CLI and run the script: [./scripts/fetch-principal-info.sh](./scripts/ fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
+    For the passwordless authentication to be properly set up, you must set the principal name of the external administrator (UPN). If you need > help finding this value, please login with the Azure CLI and run the script: [./scripts/fetch-principal-info.sh](./scripts/fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
 
     Once you know your principal name, set it as an azd environment variable:
 
