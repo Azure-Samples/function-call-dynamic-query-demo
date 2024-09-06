@@ -10,7 +10,7 @@ It does this by first identifying if the user query is asking about an internal 
 This project is designed for deployment via the Azure Developer CLI, hosting the backend on Azure Web Apps, the database being Azure SQL, and the models that support function calling in Azure OpenAI. This demo leverges the ["AdventureWorks"](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms) Sample Database.
 
 * Conversion of user queries into Azure SQL that can be executed
-* Generate results from your internal Azure SQL database based on user queries.
+* Generate results from your internal Azure SQL database based on user queries
 * Enforce only read queries to the database
 * Ask questions like "What are the top 3 products we have?", "What is the cost associated with product HL Road Frame - Black, 58?" , "How many red products do we have?" & more!
 
@@ -72,9 +72,9 @@ Once you've opened the project, you can deploy it to Azure.
 3. Configure your environment variables that will be used for deployment:
 
     > [!IMPORTANT]
-    > This project code uses keyless authentication with the Azure SQL server, but it doesn't currently turn off password auth entirely, due to an issue with Bicep-based deployments. The username is set to a unique string, and the password is set to an auto-generated value.
+    > This project code uses passwordless authentication with the Azure SQL server, but it doesn't currently turn off SQL password auth entirely, due to an issue with Bicep-based deployments. The username is set to a unique string, and the password is set to an auto-generated value. Once deployed, you can disable SQL password auth via the Azure portal.
 
-    For the keyless authentication to be properly set up, you must set the principal name of the external administrator (UPN). If you need > help finding this value, please login with the Azure CLI and run the script: [./scripts/fetch-principal-info.sh](./scripts/ fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
+    For the passwordless authentication to be properly set up, you must set the principal name of the external administrator (UPN). If you need > help finding this value, please login with the Azure CLI and run the script: [./scripts/fetch-principal-info.sh](./scripts/ fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
 
     Once you know your principal name, set it as an azd environment variable:
 
@@ -123,6 +123,6 @@ You may try the [Azure pricing calculator](https://azure.microsoft.com/pricing/c
 
 ## Security guidelines
 
-This template uses [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for authenticating to the Azure services used (Azure OpenAI, Azure PostgreSQL Flexible Server).
+This template uses [Managed Identity](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/overview) for authenticating to the Azure services used (Azure OpenAI, Azure SQL Server).
 
 Additionally, we have added a [GitHub Action](https://github.com/microsoft/security-devops-action) that scans the infrastructure-as-code files and generates a report containing any detected issues. To ensure continued best practices in your own repository, we recommend that anyone creating solutions based on our templates ensure that the [Github secret scanning](https://docs.github.com/code-security/secret-scanning/about-secret-scanning) setting is enabled.
