@@ -14,9 +14,6 @@
         "Department": "testingfastapi"
       }
     },
-    "administratorLogin": {
-      "value": "${AZURE_ADMIN_LOGIN}"
-    },
     "administratorPassword": {
       "value": "$(secretOrRandomPassword)"
     },

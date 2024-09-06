@@ -14,7 +14,6 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
   sku: {
     name: 'S0'
     tier: 'Standard'
-    capacity: chatgpt4oDeploymentCapacity
   }
   properties: {
     customSubDomainName: customSubDomainName
@@ -23,7 +22,7 @@ resource openAI 'Microsoft.CognitiveServices/accounts@2023-10-01-preview' = {
     name: openaideploymentname
     sku: {
       name: 'Standard'
-      capacity: 30
+      capacity: chatgpt4oDeploymentCapacity
     }
     properties: {
       model: {
