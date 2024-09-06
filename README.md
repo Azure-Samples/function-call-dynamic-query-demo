@@ -72,9 +72,9 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 3. Configure your environment variables that will be used for deployment:
 
 > [!IMPORTANT]
-> Please note that SQL Auth will be turned off as part of the deployment. However, an admin name and password must be given as part of the database creation process.
+> Please note that SQL Auth cannot be turned off as part of the deployment. However, an admin name and password must be given as part of the database creation process. In the current state, you can enable Microsoft Entra authentication only via the portal.
 
- * aad_admin_name: Principal name of the external administrator (UPN). If you need help finding this value, please login with the Azure CLI and run the script: [fetch-principal-info.sh](./scripts/fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
+ * aad_admin_name: Principal name of the external administrator (UPN). If you need help finding this value, please login with the Azure CLI and run the script: [fetch-principal-info.sh](./scripts/fetch-principal-info.sh) or [fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
 
     ```shell
     azd env set AZURE_PRINCIPAL_NAME yourprincipalname
