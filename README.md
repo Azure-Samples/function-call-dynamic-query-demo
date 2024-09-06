@@ -25,8 +25,6 @@ To have more understanding of the tables contents. Please login to your Azure SQ
 
 ## Getting Started
 
-### Local Environment
-
 1. Make sure the following tools are installed:
 
     * [Azure Developer CLI (azd)](https://aka.ms/install-azd)
@@ -38,18 +36,20 @@ To have more understanding of the tables contents. Please login to your Azure SQ
 
 3. Open the project folder
 
-4. Install required Python packages and backend application:
+4. Create a Python virtual environment and activate it.
+
+5. Install required Python packages and backend application:
 
     ```shell
     pip install -r requirements-dev.txt
     pip install -e app
     ```
 
-5. Continue with the [deployment steps](#deployment) below.
+6. Continue with the [deployment steps](#deployment) below.
 
 ## Deployment
 
-Once you've opened the project in [Codespaces](#github-codespaces), [Dev Containers](#vs-code-dev-containers), or [locally](#local-environment), you can deploy it to Azure.
+Once you've opened the project, you can deploy it to Azure.
 
 1. Sign in to your Azure account:
 
@@ -71,49 +71,45 @@ Once you've opened the project in [Codespaces](#github-codespaces), [Dev Contain
 
 3. Configure your environment variables that will be used for deployment:
 
-> [!IMPORTANT]
-> Please note that SQL Auth will be turned off as part of the deployment. However, an admin name and password must be given as part of the database creation process.
+    > [!IMPORTANT]
+    > This project code uses keyless authentication with the Azure SQL server, but it doesn't currently turn off password auth entirely, due to an issue with Bicep-based deployments. The username is set to a unique string, and the password is set to an auto-generated value.
 
- * aad_admin_name: Principal name of the external administrator (UPN). If you need help finding this value, please login with the Azure CLI and run the script: [fetch-principal-info.sh](./scripts/fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
+    For the keyless authentication to be properly set up, you must set the principal name of the external administrator (UPN). If you need > help finding this value, please login with the Azure CLI and run the script: [./scripts/fetch-principal-info.sh](./scripts/ fetch-principal-info.sh) or [./scripts/fetch-principal-info.ps1](scripts/fetch-principal-info.ps1)
+
+    Once you know your principal name, set it as an azd environment variable:
 
     ```shell
     azd env set AZURE_PRINCIPAL_NAME yourprincipalname
     ```
 
- * administrator_login: login name of the administrator for the Azure SQL Database.
+4. Deploy the resources:
 
     ```shell
-    azd env set AZURE_ADMIN_LOGIN someadminname
+    azd up
     ```
-
- * administratorPassword: password of the administrator for the Azure SQL Database.
-
-    ```shell
-    azd env set AZURE_ADMIN_PASSWORD someadminpassword
-    ```
-
-
 
 ## Accessing the API documentation
 
-After all the resources have been provisioned and the deployment is complete. Head to the endpoint the App Service created.
-You will be directed to a root entry point for the backend. To test the APIs, please add `docs` to the end of the url.
+After all the resources have been provisioned and the deployment is complete, head to the endpoint the App Service created.
+You will be directed to a root entry point for the backend.
+
+### Opening the API documentation
+
+To test the APIs, please add `docs` to the end of the url.
 
 > [!NOTE]
 > For example, if your endpoint is: `https://testing-function-call-demo-example-webapp.azurewebsites.net`
 > To test the endpoint, you must add `docs` at the end of this url, so the new url would be:
 > `https://testing-function-call-demo-example-webapp.azurewebsites.net/docs`
 
-## Getting Started
+### Testing the APIs
 
-- **Step 1:** Access the API documentation at `/docs`.
-- **Step 2:** Use the Swagger UI to explore and test the available APIs.
+Use the Swagger UI to explore and test the available APIs.
 
-You will have the ability to test 2 APIs in the Swagger UI.
+You will have the ability to test 2 APIs:
 
 1) `execute_query` API which will take as input, a SQL command to execute on the Azure SQL Database.
 2) `ask` API which will take a user message, convert it to a SQL Command using OpenAI, and execute the query against the database which will return the result in JSON format.
-
 
 ## Costs
 
@@ -124,7 +120,6 @@ You may try the [Azure pricing calculator](https://azure.microsoft.com/pricing/c
 * Azure OpenAI: Standard tier, GPT and Ada models. Pricing per 1K tokens used, and at least 1K tokens are used per question. [Pricing](https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/)
 * Azure SQL: This project leverage the “General Purpose - Serverless: Gen5, 1 vCore” sku with the adventureworks database. The cost depends on the compute costs and storage costs associated with the project. [Pricing](https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/single/)
 * Azure Monitor: Pay-as-you-go tier. Costs based on data ingested. [Pricing](https://azure.microsoft.com/pricing/details/monitor/)
-
 
 ## Security guidelines
 
