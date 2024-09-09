@@ -27,42 +27,84 @@ if [ "$OS" == "Linux" ]; then
     OS_ID=$(lsb_release -is 2>/dev/null)
     OS_VERSION=$(lsb_release -rs 2>/dev/null)
 
-    if [ "$OS_ID" == "Ubuntu" ]; then
+    if [ "$OS_ID" == "Debian" ]; then
+        echo "Detected OS: Debian $OS_VERSION"
+
+        # Skip installing libldap-2.5-0 if dependencies cannot be met
+        if ! dpkg -s libldap-2.5-0 &>/dev/null; then
+            echo "Skipping installation of libldap-2.5-0 due to unmet dependencies."
+        else
+            echo "Installing libldap-2.5-0..."
+            dpkg -i libldap-2.5-0_2.5.13+dfsg-5_amd64.deb
+            if [ $? -ne 0 ]; then
+                echo "Failed to install libldap-2.5-0. Skipping further libldap installation."
+            else
+                dpkg -i libldap-dev_2.5.13+dfsg-5_amd64.deb
+            fi
+        fi
+
+        # Add GPG key and configure repository
+        echo "Adding GPG key and configuring repository..."
+        if [ "$OS_VERSION" == "9" ] || [ "$OS_VERSION" == "10" ] || [ "$OS_VERSION" == "11" ]; then
+            curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+        elif [ "$OS_VERSION" == "12" ]; then
+            curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
+        else
+            echo "Debian $OS_VERSION is not currently supported."
+            exit 1
+        fi
+
+        # Configure repository based on Debian version
+        echo "Configuring repository based on Debian version..."
+        curl https://packages.microsoft.com/config/debian/$OS_VERSION/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+
+        # Clear APT cache and update
+        echo "Clearing APT cache and updating..."
+        sudo rm -rf /var/lib/apt/lists/*
+        sudo apt-get update
+
+        # Install ODBC driver and tools
+        echo "Installing ODBC driver and tools..."
+        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18
+        echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+        source ~/.bashrc
+
+        # Install unixODBC development headers and kerberos library
+        echo "Installing unixODBC development headers and kerberos library..."
+        sudo apt-get install -y unixodbc-dev libgssapi-krb5-2
+
+    elif [ "$OS_ID" == "Ubuntu" ]; then
         echo "Detected OS: Ubuntu $OS_VERSION"
         if ! [[ "18.04 20.04 22.04 23.04 24.04" == *"$OS_VERSION"* ]]; then
             echo "Ubuntu $OS_VERSION is not currently supported."
             exit 1
         fi
+
+        # Add GPG key and configure repository
+        echo "Adding GPG key and configuring repository..."
         curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
         curl https://packages.microsoft.com/config/ubuntu/$OS_VERSION/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+
+        # Clear APT cache and update
+        echo "Clearing APT cache and updating..."
+        sudo rm -rf /var/lib/apt/lists/*
         sudo apt-get update
-        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
-    elif [ "$OS_ID" == "Debian" ]; then
-        echo "Detected OS: Debian $OS_VERSION"
-        curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
-        if [ "$OS_VERSION" == "9" ]; then
-            curl https://packages.microsoft.com/config/debian/9/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-        elif [ "$OS_VERSION" == "10" ]; then
-            curl https://packages.microsoft.com/config/debian/10/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-        elif [ "$OS_VERSION" == "11" ]; then
-            curl https://packages.microsoft.com/config/debian/11/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-        elif [ "$OS_VERSION" == "12" ]; then
-            curl https://packages.microsoft.com/config/debian/12/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-        else
-            echo "Debian $OS_VERSION is not currently supported."
-            exit 1
-        fi
-        sudo apt-get update
-        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18
-        sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18
+
+        # Install ODBC driver and tools
+        echo "Installing ODBC driver and tools..."
+        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18
         echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
         source ~/.bashrc
-        sudo apt-get install -y unixodbc-dev
-        sudo apt-get install -y libgssapi-krb5-2
+
+        # Install unixODBC development headers and kerberos library
+        echo "Installing unixODBC development headers and kerberos library..."
+        sudo apt-get install -y unixodbc-dev libgssapi-krb5-2
+
     else
         echo "Unsupported Linux distribution."
         exit 1
     fi
+
 elif [ "$OS" == "Darwin" ]; then
     echo "Detected OS: macOS"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
