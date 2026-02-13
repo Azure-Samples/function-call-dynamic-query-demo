@@ -10,7 +10,7 @@ dependencies = [
 "pyodbc==5.1.0",
 "python-dotenv==1.0.1",
 "SQLAlchemy==2.0.31",
-"sqlparse==0.5.1",
+"sqlparse==0.5.4",
 "uvicorn==0.30.1"
 ]
 
